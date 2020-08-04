@@ -1,13 +1,13 @@
 import React from "react"
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { GetHostsRequest } from "../../shared";
-import { makeStyles, Input, TextField } from "@material-ui/core";
+import { SearchHostsRequest } from "../../shared";
+import { makeStyles, TextField } from "@material-ui/core";
 import clsx from 'clsx'
 
 export type Props = {
   className?: string
-  value: GetHostsRequest
+  value: SearchHostsRequest
 }
 
 export function SearchHostsForm(props: Props){

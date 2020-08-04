@@ -1,12 +1,12 @@
 import { format, parse } from "date-fns"
 
-export type GetHostsRequest = {
+export type SearchHostsRequest = {
   startDate: Date
   endDate: Date
   guests: number
 }
 
-export function serializeGetHostsRequest(r: GetHostsRequest){
+export function serializeGetHostsRequest(r: SearchHostsRequest){
   return {
     startDate: format(r.startDate, 'yyyy-MM-dd'),
     endDate: format(r.startDate, 'yyyy-MM-dd'),

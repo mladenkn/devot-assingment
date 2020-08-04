@@ -12,7 +12,7 @@ export function Root() {
     guests: 5
   }
 
-  hostsApi.get(initialSearchFormData)
+  hostsApi.search(initialSearchFormData)
     .then(console.log)
 
   const styles = useStyles()
