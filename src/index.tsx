@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { Root } from './devot-assingment-client/components/Root'
+import { HomeSection } from './devot-assingment-client/components/HomeSection'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Root />
+    <HomeSection />
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -16,7 +16,7 @@ const initialSearchFormData = {
   guests: 5
 }
 
-export function Root() {
+export function HomeSection() {
 
   const hostsApi = useHostsApi()
 
