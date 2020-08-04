@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { Root } from './client/components/Root'
+import { Root } from './devot-assingment-client/components/Root'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(

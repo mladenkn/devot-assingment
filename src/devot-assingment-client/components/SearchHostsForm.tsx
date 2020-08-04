@@ -1,7 +1,7 @@
 import React from "react"
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { SearchHostsRequest } from "../../shared";
+import { SearchHostsRequest } from "../../devot-assingment-shared";
 import { makeStyles, TextField } from "@material-ui/core";
 import clsx from 'clsx'
 

@@ -1,4 +1,4 @@
-import { SearchHostsRequest } from "../shared";
+import { SearchHostsRequest } from "../devot-assingment-shared";
 
 export class HostsRepository {
   async search(req: SearchHostsRequest){

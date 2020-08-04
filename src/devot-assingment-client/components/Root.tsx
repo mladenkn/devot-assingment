@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHostsApi } from '../api/hostsApi';
 import { SearchHostsForm } from './SearchHostsForm';
 import { makeStyles } from '@material-ui/core';
-import { SearchHostsRequest } from '../../shared';
+import { SearchHostsRequest } from '../../devot-assingment-shared';
 
 interface State {
   form: SearchHostsRequest

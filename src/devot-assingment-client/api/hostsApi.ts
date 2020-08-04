@@ -1,4 +1,4 @@
-import { SearchHostsRequest, serializeGetHostsRequest } from "../../shared";
+import { SearchHostsRequest, serializeGetHostsRequest } from "../../devot-assingment-shared";
 import axios from 'axios'
 
 export function useHostsApi(){

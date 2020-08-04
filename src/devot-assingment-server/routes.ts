@@ -1,6 +1,6 @@
 import { IRouter } from "express";
 import { HostsRepository } from "./HostsRepository";
-import { deserializeGetHostsRequest } from "../shared";
+import { deserializeGetHostsRequest } from "../devot-assingment-shared";
 
 export function registerRoutes(router: IRouter){
 

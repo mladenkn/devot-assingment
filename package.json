@@ -23,7 +23,7 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
-    "start-server": "ts-node src/server/index.ts -P tsconfig.json",
+    "start-server": "ts-node src/devot-assingment-server/index.ts -P tsconfig.json",
     "start-client": "react-scripts start",
     "build-client": "react-scripts build",
     "test-client": "react-scripts test",
