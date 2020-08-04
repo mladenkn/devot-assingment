@@ -1,6 +1,6 @@
 import { format, parse } from "date-fns"
 
-export interface GetHostsRequest {
+export type GetHostsRequest = {
   startDate: Date
   endDate: Date
   guests: number
