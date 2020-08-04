@@ -1,10 +1,12 @@
-import { SearchHostsRequest, serialize } from "../../devot-assingment-shared/SearchHostsRequest";
-import axios from 'axios'
+import { SearchHostsRequest, serialize } from "../../devot-assingment-shared/SearchHostsRequest"
+import { useBaseApi } from "./baseApi"
 
 export function useHostsApi(){
 
+  const baseApi = useBaseApi()
+
   function search(req: SearchHostsRequest){
-    return axios.get('http://localhost:3001/hosts/search/', { params: serialize(req) })
+    return baseApi.get('hosts/search/', { params: serialize(req) })
   }
 
   return { search }
