@@ -1,5 +1,5 @@
 import { SearchHostsRequest, serialize } from "../../devot-assingment-shared/SearchHostsRequest"
-import { useBaseApi } from "./baseApi"
+import { useBaseApi } from "./base"
 
 export function useHostsApi(){
 

@@ -1,4 +1,4 @@
-import { useHostsApi } from "../api/hostsApi"
+import { useHostsApi } from "../api/hosts"
 import { SearchHostsRequest, SearchHostsRequestUncomplete } from "../../devot-assingment-shared/SearchHostsRequest"
 import { Loadable } from "../../utils/loadable"
 import { useFormik } from 'formik'
