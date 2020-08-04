@@ -3,10 +3,11 @@ import { useHostsApi } from '../api/hostsApi';
 import { SearchHostsForm } from './SearchHostsForm';
 import { makeStyles } from '@material-ui/core';
 import { SearchHostsRequest } from '../../devot-assingment-shared';
+import { Loadable } from '../../utils/loadable';
 
 interface State {
   form: SearchHostsRequest
-  response: string
+  response: Loadable<string>
 }
 
 const initialSearchFormData = {
@@ -21,15 +22,26 @@ export function Root() {
 
   const [state, updateState] = useState<State>({
     form: initialSearchFormData,
-    response: ''
+    response: {
+      status: 'LOADING'
+    }
   })
 
   function loadHosts(form: SearchHostsRequest){
+    updateState(oldState => ({
+      form: oldState.form,
+      response: {
+        status: 'LOADING'
+      }
+    }))
     hostsApi.search(form)
       .then(r => {
         updateState(oldState => ({
           form: oldState.form,
-          response: JSON.stringify(r.data, null, 2)
+          response: {
+            status: 'LOADED',
+            value: JSON.stringify(r.data, null, 2)
+          }
         }))
       })
   }
@@ -41,7 +53,7 @@ export function Root() {
   return (
     <div>
       <SearchHostsForm className={styles.form} value={state.form} />
-      {state.response} 
+      {state.response.status === 'LOADED' && state.response.value}
     </div>
   );
 }
