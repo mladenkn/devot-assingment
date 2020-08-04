@@ -1,8 +1,9 @@
 import { useHostsApi } from "../api/hostsApi"
-import { SearchHostsRequest } from "../../devot-assingment-shared/SearchHostsRequest"
+import { SearchHostsRequest, SearchHostsRequestUncomplete } from "../../devot-assingment-shared/SearchHostsRequest"
 import { Loadable } from "../../utils/loadable"
-import { useState, useEffect } from "react"
 import { useFormik } from 'formik'
+import { useState } from "react"
+import { useEffect } from "../../utils/useEffect"
 
 type State = {
   response: Loadable<string>
@@ -44,14 +45,14 @@ export function useHomeSectionLogic() {
 
   const form = useFormik({
     initialValues: {
-      startDate: new Date(),
-      endDate: new Date(),
-      guests: 5
-    },
+      startDate: null,
+      endDate: null,
+      guests: null
+    } as SearchHostsRequest | SearchHostsRequestUncomplete,
     onSubmit: () => {}
   })
 
-  useEffect(() => loadHosts(form.values), [form.values])
+  useEffect(() => loadHosts(form.values as SearchHostsRequest), [form.values])
 
   return {
     response: state.response,

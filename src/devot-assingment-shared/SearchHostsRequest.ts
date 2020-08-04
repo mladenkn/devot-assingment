@@ -6,6 +6,12 @@ export type SearchHostsRequest = {
   guests: number
 }
 
+export type SearchHostsRequestUncomplete = {
+  startDate: null,
+  endDate: null,
+  guests: null
+}
+
 export function serialize(r: SearchHostsRequest){
   return {
     startDate: format(r.startDate, 'yyyy-MM-dd'),

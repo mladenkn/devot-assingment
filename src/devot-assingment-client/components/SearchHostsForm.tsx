@@ -1,33 +1,40 @@
 import React from "react"
 import { KeyboardDatePicker } from '@material-ui/pickers';
-import { SearchHostsRequest } from "../../devot-assingment-shared/SearchHostsRequest";
+import { SearchHostsRequest, SearchHostsRequestUncomplete } from "../../devot-assingment-shared/SearchHostsRequest";
 import { makeStyles, TextField } from "@material-ui/core";
 import { FormikProps } from "formik";
 
 export type Props = {
   className?: string
-  form: FormikProps<SearchHostsRequest>
+  form: FormikProps<SearchHostsRequest | SearchHostsRequestUncomplete>
 }
 
 export function SearchHostsForm(props: Props){
 
   const styles = useStyles()
+  const { form } = props
 
   return (
     <div className={props.className}>
       <KeyboardDatePicker
         className={styles.spacing}
         label="Start date"
-        value={props.form.values.startDate}
-        onChange={() => {}}
+        value={form.values.startDate}
+        onChange={date => form.setFieldValue('startDate', date)}
       />
       <KeyboardDatePicker
         className={styles.spacing}
         label="End date"
-        value={props.form.values.endDate}
-        onChange={() => {}}
+        value={form.values.endDate}
+        onChange={date => form.setFieldValue('endDate', date)}
       />
-      <TextField label='Guests' className={styles.guestsInput} type='number' value={props.form.values.guests} />
+      <TextField
+        className={styles.guestsInput}
+        label='Guests'
+        type='number'
+        value={form.values.guests} 
+        onChange={e => form.setFieldValue('guests', e.target.value)}
+      />
     </div>
   )
 }
