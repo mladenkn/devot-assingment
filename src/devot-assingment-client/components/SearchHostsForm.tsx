@@ -1,6 +1,5 @@
 import React from "react"
-import DateFnsUtils from '@date-io/date-fns';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 import { SearchHostsRequest } from "../../devot-assingment-shared";
 import { makeStyles, TextField } from "@material-ui/core";
 
@@ -15,20 +14,18 @@ export function SearchHostsForm(props: Props){
 
   return (
     <div className={props.className}>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
-          className={styles.spacing}
-          label="Start date"
-          value={props.value.startDate}
-          onChange={() => {}}
-        />
-        <KeyboardDatePicker
-          className={styles.spacing}
-          label="End date"
-          value={props.value.endDate}
-          onChange={() => {}}
-        />
-      </MuiPickersUtilsProvider>
+      <KeyboardDatePicker
+        className={styles.spacing}
+        label="Start date"
+        value={props.value.startDate}
+        onChange={() => {}}
+      />
+      <KeyboardDatePicker
+        className={styles.spacing}
+        label="End date"
+        value={props.value.endDate}
+        onChange={() => {}}
+      />
       <TextField label='Guests' className={styles.guestsInput} type='number' value={props.value.guests} />
     </div>
   )
