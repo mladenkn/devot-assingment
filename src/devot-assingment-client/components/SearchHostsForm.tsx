@@ -3,7 +3,6 @@ import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { SearchHostsRequest } from "../../devot-assingment-shared";
 import { makeStyles, TextField } from "@material-ui/core";
-import clsx from 'clsx'
 
 export type Props = {
   className?: string
@@ -15,7 +14,7 @@ export function SearchHostsForm(props: Props){
   const styles = useStyles()
 
   return (
-    <div className={clsx(styles.root, props.className)}>
+    <div className={props.className}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDatePicker
           className={styles.spacing}
@@ -36,14 +35,10 @@ export function SearchHostsForm(props: Props){
 }
 
 const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
   spacing: {
-    marginBottom: 10
+    marginRight: 20
   },
   guestsInput: {
-    width: '40%'
+    width: 70
   }
 })

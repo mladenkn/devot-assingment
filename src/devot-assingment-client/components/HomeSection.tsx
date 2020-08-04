@@ -8,16 +8,15 @@ export function HomeSection() {
   const styles = useStyles()
 
   return (
-    <div>
-      <SearchHostsForm className={styles.form} value={logic.form} />
+    <div className={styles.root}>
+      <SearchHostsForm value={logic.form} />
       {logic.response.status === 'LOADED' && logic.response.value}
     </div>
   );
 }
 
 const useStyles = makeStyles({
-  form: {
-    width: '180px',
-    marginLeft: 10
-  }
+  root: {
+    padding: '45px 700px 0px 50px',
+  },
 })
