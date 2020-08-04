@@ -6,7 +6,7 @@ export type SearchHostsRequest = {
   guests: number
 }
 
-export function serializeGetHostsRequest(r: SearchHostsRequest){
+export function serialize(r: SearchHostsRequest){
   return {
     startDate: format(r.startDate, 'yyyy-MM-dd'),
     endDate: format(r.startDate, 'yyyy-MM-dd'),
@@ -14,7 +14,7 @@ export function serializeGetHostsRequest(r: SearchHostsRequest){
   }
 }
 
-export function deserializeGetHostsRequest(serialized: any){
+export function deserialize(serialized: any){
   return {
     startDate: parse(serialized.startDate, 'yyyy-MM-dd', 0),
     endDate: parse(serialized.startDate, 'yyyy-MM-dd', 0),

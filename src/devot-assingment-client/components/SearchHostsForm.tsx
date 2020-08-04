@@ -1,6 +1,6 @@
 import React from "react"
 import { KeyboardDatePicker } from '@material-ui/pickers';
-import { SearchHostsRequest } from "../../devot-assingment-shared";
+import { SearchHostsRequest } from "../../devot-assingment-shared/SearchHostsRequest";
 import { makeStyles, TextField } from "@material-ui/core";
 import { FormikProps } from "formik";
 

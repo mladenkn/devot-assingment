@@ -1,8 +1,8 @@
 import { useHostsApi } from "../api/hostsApi"
-import { SearchHostsRequest } from "../../devot-assingment-shared"
+import { SearchHostsRequest } from "../../devot-assingment-shared/SearchHostsRequest"
 import { Loadable } from "../../utils/loadable"
 import { useState, useEffect } from "react"
-import { useFormik, FormikProps } from 'formik'
+import { useFormik } from 'formik'
 
 type State = {
   response: Loadable<string>
