@@ -44,6 +44,6 @@ const useStyles = makeStyles({
     marginRight: 20
   },
   guestsInput: {
-    width: 70
+    width: 80
   }
 })

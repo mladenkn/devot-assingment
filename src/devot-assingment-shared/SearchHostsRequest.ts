@@ -7,9 +7,9 @@ export type SearchHostsRequest = {
 }
 
 export type SearchHostsRequestUncomplete = {
-  startDate: null,
-  endDate: null,
-  guests: null
+  startDate: Date | null,
+  endDate: Date | null,
+  guests?: number
 }
 
 export function serialize(r: SearchHostsRequest){

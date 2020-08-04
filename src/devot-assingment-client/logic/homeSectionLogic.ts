@@ -47,7 +47,7 @@ export function useHomeSectionLogic() {
     initialValues: {
       startDate: null,
       endDate: null,
-      guests: null
+      guests: undefined
     } as SearchHostsRequest | SearchHostsRequestUncomplete,
     onSubmit: () => {}
   })
