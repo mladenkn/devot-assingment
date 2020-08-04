@@ -9,7 +9,7 @@ export function HomeSection() {
 
   return (
     <div className={styles.root}>
-      <SearchHostsForm value={logic.form} />
+      <SearchHostsForm form={logic.form} />
       {logic.response.status === 'LOADED' && logic.response.value}
     </div>
   );
