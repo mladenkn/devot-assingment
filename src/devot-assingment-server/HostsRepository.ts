@@ -1,17 +1,10 @@
-import { SearchHostsRequest } from "../devot-assingment-shared/SearchHostsRequest";
-import { DataFilesPaths } from "./models";
-import csv from 'csvtojson'
+import { SearchHostsRequest } from "../devot-assingment-shared/SearchHostsRequest"
+import { AppData } from "./models"
 
 export class HostsRepository {
+  
+  constructor(data: AppData){
 
-  bookings?: any[]
-
-  async initialize(files: DataFilesPaths){
-    await csv()
-      .fromFile(files.bookings)
-      .then(a => {
-        this.bookings = a
-      })
   }
 
   async search(req: SearchHostsRequest){

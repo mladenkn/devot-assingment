@@ -1,8 +1,9 @@
 import express from 'express'
 import cors from 'cors'
-import { registerRoutes } from './routes'
-import { HostsRepository } from './HostsRepository'
 import path from 'path'
+import loadAppData from './loadAppData'
+import { HostsRepository } from './HostsRepository'
+import { registerRoutes } from './routes'
 
 function getDataFilesPaths(){
   const folder = 'C:\\Users\\mlade\\Documents\\projekti\\devot-assingment\\assingment_specs'
@@ -19,9 +20,9 @@ const port = 3001
 
 app.use(cors())
 
-const hostsRepo = new HostsRepository()
-hostsRepo.initialize(getDataFilesPaths())
-  .then(() => {
+loadAppData(getDataFilesPaths())
+  .then(appData => {
+    const hostsRepo = new HostsRepository(appData)
     registerRoutes(app, hostsRepo)
   })
 
