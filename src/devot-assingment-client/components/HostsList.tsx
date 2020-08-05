@@ -3,7 +3,7 @@ import { SearchHostsForm } from './SearchHostsForm';
 import { makeStyles } from '@material-ui/core';
 import { useHomeSectionLogic } from '../logic/homeSectionLogic';
 
-export function HomeSection() {
+export function HostsList() {
   const logic = useHomeSectionLogic()
   const styles = useStyles()
 
