@@ -1,6 +1,8 @@
 import { SearchHostsRequest } from "../devot-assingment-shared/SearchHostsRequest"
-import { AppData } from "./models"
-import { doOverlap } from "../utils/dates"
+import { AppData, Room, Booking } from "./models"
+import { doOverlap, isRangeInRange } from "../utils/dates"
+import { addDays } from "date-fns"
+import { min } from "lodash"
 
 export class HostsRepository {
   
@@ -9,25 +11,73 @@ export class HostsRepository {
 
   async search(req: SearchHostsRequest){
 
-    console.log('HostsRepository:12', req)
-
     const r: any[] = []
+    const requiredDateRange: [Date, Date] = [req.startDate, req.endDate]
 
-    for (const host of this.data.hosts) {
-      const rooms = this.data.rooms.filter(r => r.hostRef === host.ref)
-      const roomRefs = rooms.map(r => r.ref)
-      const bookings = this.data.bookings.filter(b => roomRefs.includes(b.roomRef))
+    for (const host of this.data.hosts) {      
+      const availableRooms = this.data.rooms.reduce((acc, room) => {
+          if(room.hostRef !== host.ref)
+            return acc
+          if(room.capacity < req.guests)
+            return acc
+          
+          const overlapingBookings = this.data.bookings.filter(b => {
+            if(b.roomRef !== room.ref)
+              return false
+            return doOverlap(requiredDateRange, [b.startDate, b.endDate])
+          })
 
-      const overLapingBookings = bookings
-        .filter(b => {
-          const r = doOverlap([req.startDate, req.endDate], [b.startDate, b.endDate])
-          // console.log('Gledan je li se rangevi poklapaju', [req.startDate, req.endDate], [b.startDate, b.endDate], r)
-          return r
+          if(!overlapingBookings.length){
+            const roomMapped = {
+              name: room.ref,
+              totalCapacity: room.capacity,
+              freeCapacity: room.capacity
+            }
+            return [...acc, roomMapped]
+          }
+          else {
+            const compatibleOverlapingBookings = this.findCompatibleOverlapingBookings(req, room, overlapingBookings)
+            const totalFreeCapacity = min(compatibleOverlapingBookings.map(b => b.freeCapacity))
+
+            if(compatibleOverlapingBookings.length){
+              const roomMapped = {
+                name: room.ref,
+                totalCapacity: room.capacity,
+                freeCapacity: totalFreeCapacity 
+              }
+              return [...acc, roomMapped]
+            }
+            else
+              return acc
+          }
+        }, [] as any[])
+
+      if(availableRooms.length)
+        r.push({
+          name: host.name,
+          address: host.address,
+          rooms: availableRooms
         })
-
-        // overLapingBookings.length && console.log('HostsRepository:24', overLapingBookings)
     }
 
     return r
+  }
+
+  findCompatibleOverlapingBookings(req: SearchHostsRequest, room: Room, overlapingBookings: Booking[]){
+    return overlapingBookings
+      .reduce((acc, booking) =>
+        {
+          const doesSatisfy = isRangeInRange([req.startDate, req.endDate], [booking.startDate, addDays(booking.endDate, 1)]) &&
+            (booking.numberOfGuests + req.guests) <= room.capacity
+          if(doesSatisfy){
+            const mapped = {
+              ...booking,
+              freeCapacity: room.capacity - booking.numberOfGuests
+            }
+            return [...acc, mapped]
+          }
+          return acc
+        }, [] as (Booking & { freeCapacity: number })[]
+      ) 
   }
 }

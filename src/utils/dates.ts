@@ -8,3 +8,8 @@ export function doOverlap(range1: [Date, Date], range2: [Date, Date]){
   const range2Plus: [Date, Date] = [range2[0], addDays(range2[1], 1)]
   return isInRange(range1[0], range2Plus) || isInRange(range1[1], range2Plus)
 }
+
+export function isRangeInRange(range1: [Date, Date], range2: [Date, Date]){
+  const range2Plus: [Date, Date] = [range2[0], addDays(range2[1], 1)]
+  return isInRange(range1[0], range2Plus) && isInRange(range1[0], range2Plus)
+}

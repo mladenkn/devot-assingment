@@ -10,14 +10,6 @@ export type AppData = {
   rooms: Room[]
 }
 
-export type Booking = {
-  ref: string
-  roomRef: string
-  startDate: Date
-  endDate: Date
-  numberOfGuests: number
-}
-
 export type Host = {
   ref: string
   name: string
@@ -28,4 +20,12 @@ export type Room = {
   ref: string
   hostRef: string
   capacity: number
+}
+
+export type Booking = {
+  ref: string
+  roomRef: string
+  startDate: Date
+  endDate: Date
+  numberOfGuests: number
 }
