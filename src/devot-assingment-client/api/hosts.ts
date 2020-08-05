@@ -1,4 +1,4 @@
-import { SearchHostsRequest } from "../../devot-assingment-shared/SearchHostsRequest"
+import { SearchHostsRequest } from "../../devot-assingment-shared/models"
 import { useBaseApi } from "./base"
 
 export function useHostsApi(){

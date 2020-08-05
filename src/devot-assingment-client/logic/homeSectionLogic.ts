@@ -1,5 +1,5 @@
 import { useHostsApi } from "../api/hosts"
-import { SearchHostsRequest, SearchHostsRequestUncomplete } from "../../devot-assingment-shared/SearchHostsRequest"
+import { SearchHostsRequest, SearchHostsRequestUncomplete } from "../../devot-assingment-shared/models"
 import { Loadable } from "../../utils/loadable"
 import { useFormik } from 'formik'
 import { useState } from "react"

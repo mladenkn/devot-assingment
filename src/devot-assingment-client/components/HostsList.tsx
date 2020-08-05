@@ -2,7 +2,7 @@ import React from 'react';
 import { SearchHostsForm } from './SearchHostsForm';
 import { makeStyles } from '@material-ui/core';
 import { useHomeSectionLogic } from '../logic/homeSectionLogic';
-import { SearchHostsRequest, SearchHostsRequestUncomplete } from '../../devot-assingment-shared/SearchHostsRequest';
+import { SearchHostsRequest, SearchHostsRequestUncomplete } from '../../devot-assingment-shared/models';
 
 type Props = {
   formInitialValues: SearchHostsRequest | SearchHostsRequestUncomplete
