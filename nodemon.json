@@ -1,0 +1,6 @@
+{
+  "watch": ["src"],
+  "ext": ".ts",
+  "ignore": [],
+  "exec": "ts-node ./src/devot-assingment-server/index.ts -P tsconfig.server.json"
+}

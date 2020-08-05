@@ -28,7 +28,7 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
-    "start-server": "ts-node src/devot-assingment-server/index.ts -P tsconfig.server.json",
+    "start-server": "nodemon",
     "start-client": "react-scripts start",
     "build-client": "react-scripts build",
     "test-client": "react-scripts test",
@@ -54,6 +54,7 @@
     "@types/csvtojson": "^1.1.5",
     "@types/express": "^4.17.7",
     "@types/lodash": "^4.14.158",
+    "nodemon": "^2.0.4",
     "ts-node": "^8.10.2"
   }
 }
