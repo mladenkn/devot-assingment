@@ -27,26 +27,23 @@ export class HostsRepository {
             return doOverlap(requiredDateRange, [b.startDate, b.endDate])
           })
 
-          if(!overlapingBookings.length){
-            const roomMapped = {
+          function includeCurrentRoom(freeCapacity: number){
+            const r = {
               name: room.ref,
               totalCapacity: room.capacity,
-              freeCapacity: room.capacity
+              freeCapacity 
             }
-            return [...acc, roomMapped]
+            return [...acc, r]
           }
+
+          if(!overlapingBookings.length)
+            return includeCurrentRoom(room.capacity)
           else {
             const compatibleOverlapingBookings = this.findCompatibleOverlapingBookings(req, room, overlapingBookings)
             const totalFreeCapacity = min(compatibleOverlapingBookings.map(b => b.freeCapacity))
 
-            if(compatibleOverlapingBookings.length){
-              const roomMapped = {
-                name: room.ref,
-                totalCapacity: room.capacity,
-                freeCapacity: totalFreeCapacity 
-              }
-              return [...acc, roomMapped]
-            }
+            if(compatibleOverlapingBookings.length)
+              return includeCurrentRoom(totalFreeCapacity)
             else
               return acc
           }
