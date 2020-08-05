@@ -61,8 +61,8 @@ export function useHomeSectionLogic() {
 
   const form = useFormik({
     initialValues: {
-      startDate: new Date(2013, 6, 1),
-      endDate: new Date(2013, 6, 7),
+      startDate: new Date(2013, 5, 1),
+      endDate: new Date(2013, 5, 7),
       guests: undefined
     } as SearchHostsRequest | SearchHostsRequestUncomplete,
     onSubmit: v => loadHosts(v as SearchHostsRequest),
