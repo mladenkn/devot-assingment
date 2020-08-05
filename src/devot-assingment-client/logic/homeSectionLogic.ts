@@ -3,7 +3,7 @@ import { SearchHostsRequest, SearchHostsRequestUncomplete } from "../../devot-as
 import { Loadable } from "../../utils/loadable"
 import { useFormik } from 'formik'
 import { useState } from "react"
-import { isBefore, isAfter } from "date-fns"
+import { useEffect } from "../../utils/useEffect"
 
 type State = {
   response: Loadable<string>
@@ -14,18 +14,14 @@ function validateFormValues(values: SearchHostsRequest | SearchHostsRequestUncom
   
   if(!values.startDate)
     r.startDate = 'Start Date is required'
-  else if (!values.endDate ? false : isAfter(values.startDate, values.endDate))
-    r.startDate = 'Start Date should be before End date'
   
   if(!values.endDate)
     r.endDate = 'End Date is required'
-  else if (!values.startDate ? false : isBefore(values.endDate, values.startDate))
-    r.endDate = 'End Date should be after Start date'
   
   if(!values.guestsCount)
-    r.guests = 'Guests field is required'
-  else if(values.guestsCount < 1)
-    r.guests = 'Invalid input'
+    r.guestsCount = 'Guests field is required'
+
+  console.log(r)
   
   return r  
 }
@@ -62,6 +58,10 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsRequest | Sear
     onSubmit: v => loadHosts(v as SearchHostsRequest),
     validate: validateFormValues
   })
+
+  useEffect(() => {
+    form.isValid && loadHosts(form.values as SearchHostsRequest)
+  }, [form.values], { runOnFirstRender: true })
 
   return {
     response: state.response,

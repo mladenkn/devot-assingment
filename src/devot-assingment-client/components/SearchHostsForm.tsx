@@ -15,11 +15,15 @@ export function SearchHostsForm(props: Props){
   const styles = useStyles()
   const { form } = props
 
+  const touchedAnyFields = !!Object.entries(form.touched).length
+
+  console.log(touchedAnyFields, form.errors.guestsCount, !!(touchedAnyFields && form.errors.guestsCount))
+
   return (
     <FormikContext.Provider value={form}>
       <Form onReset={form.handleReset} onSubmit={form.handleSubmit} className={clsx(styles.root, props.className)}>
         <KeyboardDatePicker
-          error={!!(form.touched.startDate && form.errors.startDate)}
+          error={!!(touchedAnyFields && form.errors.startDate)}
           className={styles.spacing}
           label='Start date'
           value={form.values.startDate}
@@ -28,9 +32,10 @@ export function SearchHostsForm(props: Props){
             form.setFieldTouched('startDate')
             form.setFieldValue('startDate', date)
           }}
+          maxDate={form.values.endDate}
         />
         <KeyboardDatePicker
-          error={!!(form.touched.endDate && form.errors.endDate)}
+          error={!!(touchedAnyFields && form.errors.endDate)}
           className={styles.spacing}
           label="End date"
           value={form.values.endDate}
@@ -39,17 +44,18 @@ export function SearchHostsForm(props: Props){
             form.setFieldTouched('endDate')
             form.setFieldValue('endDate', date)
           }}
+          minDate={form.values.startDate}
         />
         <TextField
-          error={!!(form.touched.guestsCount && form.errors.guestsCount)}
+          error={!!(touchedAnyFields && form.errors.guestsCount)}
           className={clsx(styles.spacing, styles.guestsInput)}
           label='Guests'
           type='number'
           value={form.values.guestsCount}
           onBlur={() => form.setFieldTouched('guestsCount')}
           onChange={e => form.setFieldValue('guestsCount', e.target.value)}
+          inputProps={{ min: 1 }}
         />
-        <Button disabled={!form.isValid} className={styles.submitButton} variant='contained' type='submit'>Search</Button>
       </Form>
     </FormikContext.Provider>
   )
