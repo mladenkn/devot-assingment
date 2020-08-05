@@ -27,11 +27,12 @@ export class HostsRepository {
             return doOverlap(requiredDateRange, [b.startDate, b.endDate])
           })
 
-          function includeCurrentRoom(freeCapacity: number){
+          function includeCurrentRoom(freeCapacity: number, additional: object = {}){
             const r = {
               name: room.ref,
               totalCapacity: room.capacity,
-              freeCapacity 
+              freeCapacity,
+              ...additional
             }
             return [...acc, r]
           }
@@ -40,10 +41,9 @@ export class HostsRepository {
             return includeCurrentRoom(room.capacity)
           else {
             const compatibleOverlapingBookings = this.findCompatibleOverlapingBookings(req, room, overlapingBookings)
-
             if(compatibleOverlapingBookings.length){
-              const totalFreeCapacity = min(compatibleOverlapingBookings.map(b => b.freeCapacity)) as number
-              return includeCurrentRoom(totalFreeCapacity)
+              const totalFreeCapacity = min(compatibleOverlapingBookings.map(b => b.freeCapacity))!
+              return includeCurrentRoom(totalFreeCapacity, { deep: true })
             }
             else
               return acc
