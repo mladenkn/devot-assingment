@@ -9,3 +9,17 @@ export type SearchHostsRequestUncomplete = {
   endDate: Date | null,
   guestsCount?: number
 }
+
+export type HostListItem = {
+  ref: string
+  name: string
+  address: string
+  rooms: HostListRoom[]
+}
+
+export type HostListRoom = {
+  ref: string
+  name: string
+  totalCapacity: number
+  freeCapacity: number
+}

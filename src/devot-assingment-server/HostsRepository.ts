@@ -1,4 +1,4 @@
-import { SearchHostsRequest } from "../devot-assingment-shared/SearchHostsRequest"
+import { SearchHostsRequest, HostListItem, HostListRoom } from "../devot-assingment-shared/models"
 import { AppData, Room, Booking } from "./models"
 import { doOverlap, isRangeInRange } from "../utils/dates"
 import { addDays } from "date-fns"
@@ -11,7 +11,7 @@ export class HostsRepository {
 
   async search(req: SearchHostsRequest){
 
-    const r: any[] = []
+    const r: HostListItem[] = []
     const requiredDateRange: [Date, Date] = [req.startDate, req.endDate]
 
     for (const host of this.data.hosts) {      
@@ -27,12 +27,12 @@ export class HostsRepository {
             return doOverlap(requiredDateRange, [b.startDate, b.endDate])
           })
 
-          function includeCurrentRoom(freeCapacity: number, additional: object = {}){
+          function includeCurrentRoom(freeCapacity: number){
             const r = {
+              ref: room.ref,
               name: room.ref,
               totalCapacity: room.capacity,
-              freeCapacity,
-              ...additional
+              freeCapacity
             }
             return [...acc, r]
           }
@@ -43,15 +43,16 @@ export class HostsRepository {
             const compatibleOverlapingBookings = this.findCompatibleOverlapingBookings(req, room, overlapingBookings)
             if(compatibleOverlapingBookings.length){
               const totalFreeCapacity = min(compatibleOverlapingBookings.map(b => b.freeCapacity))!
-              return includeCurrentRoom(totalFreeCapacity, { deep: true })
+              return includeCurrentRoom(totalFreeCapacity)
             }
             else
               return acc
           }
-        }, [] as any[])
+        }, [] as HostListRoom[])
 
       if(availableRooms.length)
         r.push({
+          ref: host.ref,
           name: host.name,
           address: host.address,
           rooms: availableRooms
