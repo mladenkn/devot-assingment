@@ -4,30 +4,44 @@ import { camelCase } from "lodash"
 import { parse } from "date-fns"
 
 export default async function(files: AppDataFilesPaths){
-  const bookings = (await loadSet(files.bookings))
-    .map(b => ({
-      ...b,
-      startDate: parse(b.startDate, 'yyyy-MM-dd', 0),
-      endDate: parse(b.startDate, 'yyyy-MM-dd', 0),
-      capacity: parseInt(b.capacity)
-    }) as Booking)
 
-  const hosts = (await loadSet(files.hosts)) as Host[]
-  
-  const rooms = (await loadSet(files.rooms))
-    .map(r  => ({
-      ...r,
-      capacity: parseInt(r.capacity)
-    }) as Room)
+  const promises = {
+    bookings: loadSet(files.bookings),
+    hosts: loadSet(files.hosts),
+    rooms: loadSet(files.rooms)
+  }
 
-  return { bookings, rooms, hosts }
+  await Promise.all(Object.values(promises))
+
+  return {
+    bookings: (await promises.bookings)
+      .map(b => ({
+        ...b,
+        startDate: parse(b.startDate, 'yyyy-MM-dd', 0),
+        endDate: parse(b.startDate, 'yyyy-MM-dd', 0),
+        capacity: parseInt(b.capacity)
+      }) as Booking),
+    
+    hosts: (await promises.rooms) as Host[], 
+    
+    rooms: (await promises.bookings)
+      .map(r  => ({
+        ...r,
+        capacity: parseInt(r.capacity)
+      }) as Room)
+  }
 }
 
 async function loadSet(name: string){
-  const set = await csv().fromFile(name)
-  return set.map(item => {
-    const newEntries = Object.entries(item)
-      .map(([key, value]) => [camelCase(key), value])
-    return Object.fromEntries(newEntries)
+  return new Promise<any[]>(resolve => {
+    csv().fromFile(name)
+      .then(data => {
+        const mapped = data.map(item => {
+          const newEntries = Object.entries(item)
+            .map(([key, value]) => [camelCase(key), value])
+          return Object.fromEntries(newEntries)
+        })
+        resolve(mapped)
+      })
   })
 }
