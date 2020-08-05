@@ -9,15 +9,16 @@ export function Root(){
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <BrowserRouter>
         <Switch>
-          <Route exact path='/'>
-            <Redirect to='/hosts/search'/>
+          <Route exact path='/'>            
+            <Redirect to={'/hosts/search?start_date=2013-06-01&end_date=2013-06-07&guests=1'} />
           </Route>
           <Route exact path='/hosts/search'>
             {() => {
+              const params = (new URL((document as any).location)).searchParams
               const formValues = {
-                startDate: new Date('2013-06-01'),
-                endDate: new Date('2013-06-07'),
-                guestsCount: undefined
+                startDate: new Date(params.get('start_date') as string),
+                endDate: new Date(params.get('end_date') as string),
+                guestsCount: parseInt(params.get('guests') as string)
               }
               return <HostsList formInitialValues={formValues} />
             }}
