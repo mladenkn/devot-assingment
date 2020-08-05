@@ -1,12 +1,12 @@
 import { useHostsApi } from "../api/hosts"
-import { SearchHostsRequest, SearchHostsRequestUncomplete } from "../../devot-assingment-shared/models"
+import { SearchHostsRequest, SearchHostsRequestUncomplete, HostListItem } from "../../devot-assingment-shared/models"
 import { Loadable } from "../../utils/loadable"
 import { useFormik } from 'formik'
 import { useState } from "react"
 import { useEffect } from "../../utils/useEffect"
 
 type State = {
-  response: Loadable<string>
+  response: Loadable<HostListItem[]>
 }
 
 function validateFormValues(values: SearchHostsRequest | SearchHostsRequestUncomplete){
@@ -47,7 +47,7 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsRequest | Sear
         updateState({
           response: {
             status: 'LOADED',
-            value: JSON.stringify(r.data, null, 2)
+            value: r.data
           }
         })
       })

@@ -1,7 +1,7 @@
 import React from "react";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import { HostsList } from "./HostsListSection";
+import { HostsListSection } from "./HostsListSection";
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
 
 export function Root(){
@@ -20,7 +20,7 @@ export function Root(){
                 endDate: new Date(params.get('end_date') as string),
                 guestsCount: parseInt(params.get('guests') as string)
               }
-              return <HostsList formInitialValues={formValues} />
+              return <HostsListSection formInitialValues={formValues} />
             }}
           </Route>
         </Switch>

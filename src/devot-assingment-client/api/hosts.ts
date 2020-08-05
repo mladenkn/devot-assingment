@@ -1,4 +1,4 @@
-import { SearchHostsRequest } from "../../devot-assingment-shared/models"
+import { SearchHostsRequest, HostListItem } from "../../devot-assingment-shared/models"
 import { useBaseApi } from "./base"
 
 export function useHostsApi(){
@@ -7,7 +7,7 @@ export function useHostsApi(){
 
   function search(req: SearchHostsRequest){
     console.log(req)
-    return baseApi.get('hosts/search/', { params: req })
+    return baseApi.get<HostListItem[]>('hosts/search/', { params: req })
   }
 
   return { search }
