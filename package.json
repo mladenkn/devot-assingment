@@ -21,6 +21,7 @@
     "formik": "^2.1.5",
     "formik-material-ui": "^3.0.0-alpha.0",
     "formik-material-ui-pickers": "0.0.11",
+    "lodash": "^4.17.19",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
@@ -52,6 +53,7 @@
     "@types/cors": "^2.8.7",
     "@types/csvtojson": "^1.1.5",
     "@types/express": "^4.17.7",
+    "@types/lodash": "^4.14.158",
     "ts-node": "^8.10.2"
   }
 }

@@ -22,6 +22,7 @@ app.use(cors())
 
 loadAppData(getDataFilesPaths())
   .then(appData => {
+    console.log(appData)
     const hostsRepo = new HostsRepository(appData)
     registerRoutes(app, hostsRepo)
   })
