@@ -18,7 +18,7 @@ export class HostsRepository {
       const availableRooms = this.data.rooms.reduce((acc, room) => {
           if(room.hostRef !== host.ref)
             return acc
-          if(room.capacity < req.guests)
+          if(room.capacity < req.guestsCount)
             return acc
           
           const overlapingBookings = this.data.bookings.filter(b => {
@@ -40,10 +40,11 @@ export class HostsRepository {
             return includeCurrentRoom(room.capacity)
           else {
             const compatibleOverlapingBookings = this.findCompatibleOverlapingBookings(req, room, overlapingBookings)
-            const totalFreeCapacity = min(compatibleOverlapingBookings.map(b => b.freeCapacity))
 
-            if(compatibleOverlapingBookings.length)
+            if(compatibleOverlapingBookings.length){
+              const totalFreeCapacity = min(compatibleOverlapingBookings.map(b => b.freeCapacity)) as number
               return includeCurrentRoom(totalFreeCapacity)
+            }
             else
               return acc
           }
@@ -65,7 +66,7 @@ export class HostsRepository {
       .reduce((acc, booking) =>
         {
           const doesSatisfy = isRangeInRange([req.startDate, req.endDate], [booking.startDate, addDays(booking.endDate, 1)]) &&
-            (booking.numberOfGuests + req.guests) <= room.capacity
+            (booking.numberOfGuests + req.guestsCount) <= room.capacity
           if(doesSatisfy){
             const mapped = {
               ...booking,

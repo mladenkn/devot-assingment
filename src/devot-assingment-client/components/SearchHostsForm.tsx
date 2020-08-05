@@ -41,13 +41,13 @@ export function SearchHostsForm(props: Props){
           }}
         />
         <TextField
-          error={!!(form.touched.guests && form.errors.guests)}
+          error={!!(form.touched.guestsCount && form.errors.guestsCount)}
           className={clsx(styles.spacing, styles.guestsInput)}
           label='Guests'
           type='number'
-          value={form.values.guests}
-          onBlur={() => form.setFieldTouched('guests')}
-          onChange={e => form.setFieldValue('guests', e.target.value)}
+          value={form.values.guestsCount}
+          onBlur={() => form.setFieldTouched('guestsCount')}
+          onChange={e => form.setFieldValue('guestsCount', e.target.value)}
         />
         <Button disabled={!form.isValid} className={styles.submitButton} variant='contained' type='submit'>Search</Button>
       </Form>

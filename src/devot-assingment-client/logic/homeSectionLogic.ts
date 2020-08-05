@@ -22,9 +22,9 @@ function validateFormValues(values: SearchHostsRequest | SearchHostsRequestUncom
   else if (!values.startDate ? false : isBefore(values.endDate, values.startDate))
     r.endDate = 'End Date should be after Start date'
   
-  if(!values.guests)
+  if(!values.guestsCount)
     r.guests = 'Guests field is required'
-  else if(values.guests < 1)
+  else if(values.guestsCount < 1)
     r.guests = 'Invalid input'
   
   return r  
@@ -61,7 +61,7 @@ export function useHomeSectionLogic() {
     initialValues: {
       startDate: new Date('2013-06-01'),
       endDate: new Date('2013-06-07'),
-      guests: undefined
+      guestsCount: undefined
     } as SearchHostsRequest | SearchHostsRequestUncomplete,
     onSubmit: v => loadHosts(v as SearchHostsRequest),
     validate: validateFormValues

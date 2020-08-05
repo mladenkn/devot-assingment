@@ -1,19 +1,19 @@
 export type SearchHostsRequest = {
   startDate: Date
   endDate: Date
-  guests: number
+  guestsCount: number
 }
 
 export type SearchHostsRequestUncomplete = {
   startDate: Date | null,
   endDate: Date | null,
-  guests?: number
+  guestsCount?: number
 }
 
-export function deserialize(serialized: any){
+export function deserialize(serialized: any): SearchHostsRequest{
   return {
     startDate: new Date(serialized.startDate),
     endDate: new Date(serialized.endDate),
-    guests: parseInt(serialized.guests)
+    guestsCount: parseInt(serialized.guests)
   }
 }
