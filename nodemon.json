@@ -1,6 +1,10 @@
 {
-  "watch": ["src"],
+  "watch": [
+    "src/devot-assingment-server",
+    "src/devot-assingment-shared",
+    "src/utils"
+  ],
   "ext": ".ts",
   "ignore": [],
-  "exec": "ts-node ./src/devot-assingment-server/index.ts -P tsconfig.server.json"
+  "exec": "ts-node -P tsconfig.server.json ./src/devot-assingment-server/index.ts"
 }
