@@ -2,9 +2,14 @@ import React from 'react';
 import { SearchHostsForm } from './SearchHostsForm';
 import { makeStyles } from '@material-ui/core';
 import { useHomeSectionLogic } from '../logic/homeSectionLogic';
+import { SearchHostsRequest, SearchHostsRequestUncomplete } from '../../devot-assingment-shared/SearchHostsRequest';
 
-export function HostsList() {
-  const logic = useHomeSectionLogic()
+type Props = {
+  formInitialValues: SearchHostsRequest | SearchHostsRequestUncomplete
+}
+
+export function HostsList(props: Props) {
+  const logic = useHomeSectionLogic(props.formInitialValues)
   const styles = useStyles()
 
   return (

@@ -30,7 +30,7 @@ function validateFormValues(values: SearchHostsRequest | SearchHostsRequestUncom
   return r  
 }
 
-export function useHomeSectionLogic() { 
+export function useHomeSectionLogic(formInitialValues: SearchHostsRequest | SearchHostsRequestUncomplete) { 
 
   const hostsApi = useHostsApi()
 
@@ -58,11 +58,7 @@ export function useHomeSectionLogic() {
   }
 
   const form = useFormik({
-    initialValues: {
-      startDate: new Date('2013-06-01'),
-      endDate: new Date('2013-06-07'),
-      guestsCount: undefined
-    } as SearchHostsRequest | SearchHostsRequestUncomplete,
+    initialValues: formInitialValues,
     onSubmit: v => loadHosts(v as SearchHostsRequest),
     validate: validateFormValues
   })
