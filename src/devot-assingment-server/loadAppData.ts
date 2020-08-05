@@ -19,16 +19,16 @@ export default async function(files: AppDataFilesPaths){
         ...b,
         startDate: parse(b.startDate, 'yyyy-MM-dd', 0),
         endDate: parse(b.startDate, 'yyyy-MM-dd', 0),
-        capacity: parseInt(b.capacity)
+        numberOfGuests: parseInt(b.numberOfGuests)
       }) as Booking),
     
-    hosts: (await promises.rooms) as Host[], 
+    hosts: (await promises.hosts) as Host[],
     
-    rooms: (await promises.bookings)
-      .map(r  => ({
+    rooms: (await promises.rooms)
+      .map(r => ({
         ...r,
         capacity: parseInt(r.capacity)
-      }) as Room)
+      }))
   }
 }
 
