@@ -9,6 +9,8 @@ export class HostsRepository {
 
   async search(req: SearchHostsRequest){
 
+    console.log('HostsRepository:12', req)
+
     const r: any[] = []
 
     for (const host of this.data.hosts) {
@@ -19,7 +21,7 @@ export class HostsRepository {
       const overLapingBookings = bookings
         .filter(b => {
           const r = doOverlap([req.startDate, req.endDate], [b.startDate, b.endDate])
-          console.log('Gledan je li se rangevi poklapaju', [req.startDate, req.endDate], [b.startDate, b.endDate], r)
+          // console.log('Gledan je li se rangevi poklapaju', [req.startDate, req.endDate], [b.startDate, b.endDate], r)
           return r
         })
 

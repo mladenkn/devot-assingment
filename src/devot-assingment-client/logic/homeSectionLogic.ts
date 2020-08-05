@@ -26,8 +26,6 @@ function validateFormValues(values: SearchHostsRequest | SearchHostsRequestUncom
     r.guests = 'Guests field is required'
   else if(values.guests < 1)
     r.guests = 'Invalid input'
-
-  console.log('homeSectionLogic:31', values, r)
   
   return r  
 }
@@ -61,8 +59,8 @@ export function useHomeSectionLogic() {
 
   const form = useFormik({
     initialValues: {
-      startDate: new Date(2013, 5, 1),
-      endDate: new Date(2013, 5, 7),
+      startDate: new Date('2013-06-01'),
+      endDate: new Date('2013-06-07'),
       guests: undefined
     } as SearchHostsRequest | SearchHostsRequestUncomplete,
     onSubmit: v => loadHosts(v as SearchHostsRequest),

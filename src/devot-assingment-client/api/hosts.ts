@@ -1,4 +1,4 @@
-import { SearchHostsRequest, serialize } from "../../devot-assingment-shared/SearchHostsRequest"
+import { SearchHostsRequest } from "../../devot-assingment-shared/SearchHostsRequest"
 import { useBaseApi } from "./base"
 
 export function useHostsApi(){
@@ -6,7 +6,8 @@ export function useHostsApi(){
   const baseApi = useBaseApi()
 
   function search(req: SearchHostsRequest){
-    return baseApi.get('hosts/search/', { params: serialize(req) })
+    console.log(req)
+    return baseApi.get('hosts/search/', { params: req })
   }
 
   return { search }
