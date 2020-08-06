@@ -1,12 +1,12 @@
 import { useHostsApi } from "../api/hosts"
 import { SearchHostsFormInput, SearchHostsFormInputUncomplete, HostListItem } from "../../devot-assingment-shared/models"
-import { Loadable } from "../../utils/loadable"
+import { LoadableList } from "../../utils/loadable"
 import { useFormik } from 'formik'
 import { useState } from "react"
 import { useEffect } from "../../utils/useEffect"
 
 type State = {
-  hostsList: Loadable<HostListItem[]>
+  hostsList: LoadableList<HostListItem[]>
 }
 
 function validateFormValues(values: SearchHostsFormInput | SearchHostsFormInputUncomplete){

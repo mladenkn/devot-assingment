@@ -1,19 +1,19 @@
-export type LoadableStatus = 'LOADING' | 'LOADED' | 'ERRO'
+export type LoadableListStatus = 'LOADING' | 'LOADED' | 'LOADING_MORE' | 'ERROR'
 
-export interface Loaded<T> {
+export interface LoadedList<T> {
   status: 'LOADED',
   value: T
 }
 
-export type Loadable<T> = Loaded<T> | { status: 'LOADING', value?: T } | { status: 'ERROR' }
+export type LoadableList<T> = LoadedList<T> | { status: 'LOADING' } | { status: 'LOADING_MORE', value: T } | { status: 'ERROR' }
 
-export function assertIsLoaded<T, TReturnValue>(loadable: Loadable<T>, cb: (a: T) => TReturnValue){
+export function assertIsLoaded<T, TReturnValue>(loadable: LoadableList<T>, cb: (a: T) => TReturnValue){
   if(loadable.status !== 'LOADED')
     throw new Error('Loadable not loaded.')
   return cb(loadable.value)
 }
 
-export function map<T, TMapped>(loadable: Loadable<T>, mapActual: (loadedValue: T) => TMapped){
+export function map<T, TMapped>(loadable: LoadableList<T>, mapActual: (loadedValue: T) => TMapped){
   if(loadable.status === 'LOADED')
     return {
       status: loadable.status,
