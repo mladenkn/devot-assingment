@@ -12,13 +12,16 @@ export class HostsRepository {
   async search(req: SearchHostsFormInput & { maxCount: number }){
 
     const r: HostListItem[] = []
+    const pageBegin = this.findPageBegin(req)
 
-    for (let index = req.offset; index < this.data.hosts.length; index++) {
+    if(!pageBegin)
+      return r
+
+    for (let index = pageBegin; index < this.data.hosts.length; index++) {
       if(r.length === req.maxCount)
         break
       
       const host = this.data.hosts[index];
-
       const availableRooms = this.findAvailableRooms(host.ref, req)
 
       if(availableRooms.length)
@@ -31,6 +34,19 @@ export class HostsRepository {
     }
 
     return r
+  }
+
+  findPageBegin(req: SearchHostsFormInput){
+    let hostsThatPassedTheFilterCount = 0
+    for (let index = 0; index < this.data.hosts.length; index++) {
+      const host = this.data.hosts[index];
+      const doesPassFilter = this.findAvailableRooms(host.ref, req).length > 0
+      if(doesPassFilter)
+        hostsThatPassedTheFilterCount++
+      if(hostsThatPassedTheFilterCount === req.offset)
+        return req.offset + 1
+    }
+    return undefined
   }
 
   findAvailableRooms(hostRef: string, req: SearchHostsFormInput){
