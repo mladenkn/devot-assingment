@@ -3,7 +3,7 @@ import { SearchHostsForm } from './SearchHostsForm';
 import { makeStyles } from '@material-ui/core';
 import { useHomeSectionLogic } from '../logic/homeSectionLogic';
 import { SearchHostsFormInput, SearchHostsFormInputUncomplete } from '../../devot-assingment-shared/models';
-import { HostsList } from './HostList';
+import { HostsList } from './HostsList';
 import { LoadableList } from '../../utils/view/LoadableList';
 
 type Props = {
