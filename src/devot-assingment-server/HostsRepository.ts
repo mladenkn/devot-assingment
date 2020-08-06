@@ -14,7 +14,7 @@ export class HostsRepository {
     const r: HostListItem[] = []
     const pageBegin = this.findPageBegin(req)
 
-    if(!pageBegin)
+    if(pageBegin === undefined)
       return r
 
     for (let index = pageBegin; index < this.data.hosts.length; index++) {
@@ -37,6 +37,8 @@ export class HostsRepository {
   }
 
   findPageBegin(req: SearchHostsFormInput){
+    if(req.offset === 0)
+      return 0
     let hostsThatPassedTheFilterCount = 0
     for (let index = 0; index < this.data.hosts.length; index++) {
       const host = this.data.hosts[index];
