@@ -1,14 +1,14 @@
-import { Loadable } from "../../utils/loadable";
+import { Loadable as LoadableModel } from "../../utils/loadable";
 import { HostListItem } from "../../devot-assingment-shared/models";
 import React from "react";
-import { LoadableList } from "../../utils/view/LoadableList";
+import { Loadable } from "../../utils/view/Loadable";
 import { HostsList } from "./HostsList";
 import { makeStyles, IconButton } from "@material-ui/core";
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight'
 
 type Props = {
-  hosts: Loadable<HostListItem[]>
+  hosts: LoadableModel<HostListItem[]>
   offset: number
   updateOffset: (variant: 'increase' | 'decrease') => void
 }
@@ -17,14 +17,14 @@ export function PaginatedHostsList(props: Props){
   const styles = useStyles()
   return (
     <div className={styles.root}>
-      <LoadableList
-      {...props.hosts}
-      className={styles.hostsListWrapperLoadable} 
-      circularProgressStyle={{ width: 70, height: 70 }} 
-      notLoadedClassName={styles.hostsListNotLoaded}
+      <Loadable
+        {...props.hosts}
+        className={styles.hostsListWrapperLoadable} 
+        circularProgressStyle={{ width: 70, height: 70 }} 
+        notLoadedClassName={styles.hostsListNotLoaded}
       >
         {hosts => <HostsList hosts={hosts} />}
-      </LoadableList>
+      </Loadable>
       <div className={styles.navigation}>
         {props.offset !== 0 &&
           <IconButton onClick={() => props.updateOffset('decrease')}>
