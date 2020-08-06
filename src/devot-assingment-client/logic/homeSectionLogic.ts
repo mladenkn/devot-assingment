@@ -1,6 +1,6 @@
 import { useHostsApi } from "../api/hosts"
 import { SearchHostsFormInput, SearchHostsFormInputUncomplete, HostListItem } from "../../devot-assingment-shared/models"
-import { LoadableList } from "../../utils/loadable"
+import { LoadableList } from "../../utils/loadableList"
 import { useFormik } from 'formik'
 import { useState } from "react"
 import { useEffect } from "../../utils/useEffect"

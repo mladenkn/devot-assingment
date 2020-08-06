@@ -1,4 +1,4 @@
-import { LoadableList as LoadableModel } from "../loadable";
+import { LoadableList as LoadableModel } from "../loadableList";
 import { makeStyles, CircularProgress } from "@material-ui/core";
 import React, { ReactElement } from "react";
 import clsx from 'clsx'
