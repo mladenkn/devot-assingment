@@ -20,11 +20,11 @@ function validateFormValues(values: SearchHostsFormInput | SearchHostsFormInputU
   
   if(!values.guestsCount)
     r.guestsCount = 'Guests field is required'
-
-  console.log(r)
   
   return r  
 }
+
+const hostsListPageSize = 5
 
 export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | SearchHostsFormInputUncomplete) { 
 
@@ -49,7 +49,7 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | Se
       }
     })
     const formInput = form.values as SearchHostsFormInput
-    hostsApi.search({ ...formInput, maxCount: 5 })
+    hostsApi.search({ ...formInput, maxCount: hostsListPageSize })
       .then(r => {
         updateState({
           hostsList: {
@@ -60,6 +60,11 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | Se
       })
   }
 
+  function updateHostsListOffset(variant: 'increase' | 'decrease'){
+    const offset = variant === 'increase' ? form.values.offset + hostsListPageSize : form.values.offset - hostsListPageSize
+    form.setFieldValue('offset', offset)
+  }
+
   useEffect(() => {
     form.isValid && loadHosts()
   }, [form.values], { runOnFirstRender: true })
@@ -67,5 +72,6 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | Se
   return {
     hostsList: state.hostsList,
     form,
+    updateHostsListOffset
   }
 }

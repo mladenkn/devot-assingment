@@ -14,41 +14,46 @@ export class HostsRepository {
     const r: HostListItem[] = []
     const requiredDateRange: [Date, Date] = [req.startDate, req.endDate]
 
-    for (const host of this.data.hosts.slice(req.offset, req.offset + req.maxCount + 1)) {  
+    for (let index = req.offset; index < this.data.hosts.length; index++) {
+      if(r.length === req.maxCount)
+        break
+      
+      const host = this.data.hosts[index];
+
       const availableRooms = this.data.rooms.reduce((acc, room) => {
-          if(room.hostRef !== host.ref)
-            return acc
-          if(room.capacity < req.guestsCount)
-            return acc
-          
-          const overlapingBookings = this.data.bookings.filter(b => {
-            if(b.roomRef !== room.ref)
-              return false
-            return doOverlap(requiredDateRange, [b.startDate, b.endDate])
-          })
+        if(room.hostRef !== host.ref)
+          return acc
+        if(room.capacity < req.guestsCount)
+          return acc
+        
+        const overlapingBookings = this.data.bookings.filter(b => {
+          if(b.roomRef !== room.ref)
+            return false
+          return doOverlap(requiredDateRange, [b.startDate, b.endDate])
+        })
 
-          function includeCurrentRoom(freeCapacity: number){
-            const r = {
-              ref: room.ref,
-              name: room.ref,
-              totalCapacity: room.capacity,
-              freeCapacity
-            }
-            return [...acc, r]
+        function includeCurrentRoom(freeCapacity: number){
+          const r = {
+            ref: room.ref,
+            name: room.ref,
+            totalCapacity: room.capacity,
+            freeCapacity
           }
+          return [...acc, r]
+        }
 
-          if(!overlapingBookings.length)
-            return includeCurrentRoom(room.capacity)
-          else {
-            const compatibleOverlapingBookings = this.findCompatibleOverlapingBookings(req, room, overlapingBookings)
-            if(compatibleOverlapingBookings.length){
-              const totalFreeCapacity = min(compatibleOverlapingBookings.map(b => b.freeCapacity))!
-              return includeCurrentRoom(totalFreeCapacity)
-            }
-            else
-              return acc
+        if(!overlapingBookings.length)
+          return includeCurrentRoom(room.capacity)
+        else {
+          const compatibleOverlapingBookings = this.findCompatibleOverlapingBookings(req, room, overlapingBookings)
+          if(compatibleOverlapingBookings.length){
+            const totalFreeCapacity = min(compatibleOverlapingBookings.map(b => b.freeCapacity))!
+            return includeCurrentRoom(totalFreeCapacity)
           }
-        }, [] as HostListRoom[])
+          else
+            return acc
+        }
+      }, [] as HostListRoom[])
 
       if(availableRooms.length)
         r.push({
@@ -57,9 +62,6 @@ export class HostsRepository {
           address: host.address,
           rooms: availableRooms
         })
-
-      if(r.length === req.maxCount)
-        break;
     }
 
     return r

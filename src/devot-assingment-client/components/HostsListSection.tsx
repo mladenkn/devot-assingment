@@ -16,7 +16,11 @@ export function HostsListSection(props: Props) {
   return (
     <div className={styles.root}>
       <SearchHostsForm form={logic.form} />
-      <PaginatedHostsList hosts={logic.hostsList} />
+      <PaginatedHostsList 
+        hosts={logic.hostsList} 
+        offset={logic.form.values.offset} 
+        updateOffset={logic.updateHostsListOffset} 
+      />
     </div>
   );
 }

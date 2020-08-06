@@ -9,6 +9,8 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight'
 
 type Props = {
   hosts: Loadable<HostListItem[]>
+  offset: number
+  updateOffset: (variant: 'increase' | 'decrease') => void
 }
 
 export function PaginatedHostsList(props: Props){
@@ -24,10 +26,12 @@ export function PaginatedHostsList(props: Props){
         {hosts => <HostsList hosts={hosts} />}
       </LoadableList>
       <div className={styles.navigation}>
-        <IconButton>
-          <ArrowLeftIcon />
-        </IconButton>
-        <IconButton>
+        {props.offset !== 0 &&
+          <IconButton onClick={() => props.updateOffset('decrease')}>
+            <ArrowLeftIcon />
+          </IconButton>
+        }
+        <IconButton onClick={() => props.updateOffset('increase')}>
           <ArrowRightIcon />
         </IconButton>
       </div>
