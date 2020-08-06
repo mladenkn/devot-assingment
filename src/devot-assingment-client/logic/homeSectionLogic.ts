@@ -6,7 +6,7 @@ import { useState } from "react"
 import { useEffect } from "../../utils/useEffect"
 
 type State = {
-  response: Loadable<HostListItem[]>
+  hostsList: Loadable<HostListItem[]>
 }
 
 function validateFormValues(values: SearchHostsFormInput | SearchHostsFormInputUncomplete){
@@ -31,21 +31,21 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | Se
   const hostsApi = useHostsApi()
 
   const [state, updateState] = useState<State>({
-    response: {
+    hostsList: {
       status: 'LOADING'
     }
   })
 
   function loadHosts(form: SearchHostsFormInput){
     updateState({
-      response: {
+      hostsList: {
         status: 'LOADING'
       }
     })
     hostsApi.search(form)
       .then(r => {
         updateState({
-          response: {
+          hostsList: {
             status: 'LOADED',
             value: r.data
           }
@@ -64,7 +64,7 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | Se
   }, [form.values], { runOnFirstRender: true })
 
   return {
-    response: state.response,
+    hostsList: state.hostsList,
     form
   }
 }

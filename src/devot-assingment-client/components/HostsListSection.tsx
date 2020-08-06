@@ -18,7 +18,7 @@ export function HostsListSection(props: Props) {
     <div className={styles.root}>
       <SearchHostsForm form={logic.form} />
       <Loadable
-        {...logic.response}
+        {...logic.hostsList}
         className={styles.hostsListWrapper} 
         circularProgressStyle={{ width: 70, height: 70 }} 
         notLoadedClassName={styles.hostsListNotLoaded}
