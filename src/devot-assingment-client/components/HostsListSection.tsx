@@ -19,7 +19,7 @@ export function HostsListSection(props: Props) {
       <SearchHostsForm form={logic.form} />
       <LoadableList
         {...logic.hostsList}
-        className={styles.hostsListWrapper} 
+        className={styles.hostsListWrapperLoadable} 
         circularProgressStyle={{ width: 70, height: 70 }} 
         notLoadedClassName={styles.hostsListNotLoaded}
       >
@@ -33,7 +33,7 @@ const useStyles = makeStyles({
   root: {
     padding: '45px 700px 0px 50px',
   },
-  hostsListWrapper: {
+  hostsListWrapperLoadable: {
     marginTop: 10
   },
   hostsListNotLoaded: {
