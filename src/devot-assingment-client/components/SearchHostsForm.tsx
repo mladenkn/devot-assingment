@@ -1,7 +1,7 @@
 import React from "react"
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import { SearchHostsFormInput, SearchHostsFormInputUncomplete } from "../../devot-assingment-shared/models";
-import { makeStyles, TextField, Button } from "@material-ui/core";
+import { makeStyles, TextField } from "@material-ui/core";
 import { FormikProps, Form, FormikContext } from "formik";
 import clsx from 'clsx'
 
