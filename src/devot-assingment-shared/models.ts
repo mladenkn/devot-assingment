@@ -10,6 +10,11 @@ export type SearchHostsFormInputUncomplete = {
   guestsCount?: number
 }
 
+export type SearchHostsRequest = {
+  offset: number
+  maxCount: number
+} & SearchHostsFormInput
+
 export type HostListItem = {
   ref: string
   name: string

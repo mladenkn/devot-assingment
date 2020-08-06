@@ -5,7 +5,7 @@ export interface Loaded<T> {
   value: T
 }
 
-export type Loadable<T> = Loaded<T> | { status: 'LOADING' } | { status: 'ERROR' }
+export type Loadable<T> = Loaded<T> | { status: 'LOADING', value?: T } | { status: 'ERROR' }
 
 export function assertIsLoaded<T, TReturnValue>(loadable: Loadable<T>, cb: (a: T) => TReturnValue){
   if(loadable.status !== 'LOADED')

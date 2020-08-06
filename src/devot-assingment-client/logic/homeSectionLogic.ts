@@ -42,7 +42,7 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | Se
         status: 'LOADING'
       }
     })
-    hostsApi.search(form)
+    hostsApi.search({ ...form, maxCount: 5, offset: 0 })
       .then(r => {
         updateState({
           hostsList: {
@@ -51,6 +51,32 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | Se
           }
         })
       })
+  }
+
+  function loadMoreHosts(){
+    updateState(curState => {
+      if(curState.hostsList.status !== 'LOADED')
+        throw new Error('')      
+       return {
+         hostsList: {
+          status: 'LOADING',
+          value: curState.hostsList.value
+        }
+      }
+    })
+    hostsApi.search({ ...form.values as SearchHostsFormInput, maxCount: 5, offset: 0 })
+      .then(r => {
+        updateState(curState => {
+          if(curState.hostsList.status !== 'LOADED')
+            throw new Error('')
+          return ({
+            hostsList: {
+              status: 'LOADED',
+              value: [...curState.hostsList.value, ...r.data]
+            }
+          })
+        })
+      })    
   }
 
   const form = useFormik({
@@ -65,6 +91,7 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | Se
 
   return {
     hostsList: state.hostsList,
-    form
+    form,
+    loadMoreHosts
   }
 }
