@@ -58,6 +58,13 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | Se
           }
         })
       })
+      .catch(() => {
+        updateState({
+          hostsList: {
+            status: 'ERROR'
+          }
+        })
+      })
   }
 
   function updateHostsListOffset(variant: 'increase' | 'decrease'){
