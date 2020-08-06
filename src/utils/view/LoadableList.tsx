@@ -1,4 +1,4 @@
-import { LoadableList as LoadableModel } from "../loadableList";
+import { LoadableList as LoadableListModel } from "../loadableList";
 import { makeStyles, CircularProgress } from "@material-ui/core";
 import React, { ReactElement } from "react";
 import clsx from 'clsx'
@@ -9,9 +9,9 @@ type Props<T> = {
   notLoadedClassName?: string
   circularProgressStyle?: CSSProperties
   children: (loaded: T) => ReactElement
-} & LoadableModel<T>
+} & LoadableListModel<T>
 
-export function Loadable<TValue>(props: Props<TValue>){
+export function LoadableList<TValue>(props: Props<TValue>){
   const styles = useStyles()
   return (
     <div className={clsx(props.className, props.status !== 'LOADED' && styles.notLoaded, props.status !== 'LOADED' && props.notLoadedClassName)}>

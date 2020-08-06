@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import { useHomeSectionLogic } from '../logic/homeSectionLogic';
 import { SearchHostsFormInput, SearchHostsFormInputUncomplete } from '../../devot-assingment-shared/models';
 import { HostsList } from './HostList';
-import { Loadable } from '../../utils/view/Loadable';
+import { LoadableList } from '../../utils/view/LoadableList';
 
 type Props = {
   formInitialValues: SearchHostsFormInput | SearchHostsFormInputUncomplete
@@ -17,14 +17,14 @@ export function HostsListSection(props: Props) {
   return (
     <div className={styles.root}>
       <SearchHostsForm form={logic.form} />
-      <Loadable
+      <LoadableList
         {...logic.hostsList}
         className={styles.hostsListWrapper} 
         circularProgressStyle={{ width: 70, height: 70 }} 
         notLoadedClassName={styles.hostsListNotLoaded}
       >
         {hosts => <HostsList hosts={hosts} />}
-      </Loadable>
+      </LoadableList>
     </div>
   );
 }
