@@ -17,8 +17,6 @@ export function SearchHostsForm(props: Props){
 
   const touchedAnyFields = !!Object.entries(form.touched).length
 
-  console.log(touchedAnyFields, form.errors.guestsCount, !!(touchedAnyFields && form.errors.guestsCount))
-
   return (
     <FormikContext.Provider value={form}>
       <Form onReset={form.handleReset} onSubmit={form.handleSubmit} className={clsx(styles.root, props.className)}>
