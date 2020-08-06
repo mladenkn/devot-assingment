@@ -59,7 +59,7 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | Se
         throw new Error('')      
        return {
          hostsList: {
-          status: 'LOADING',
+          status: 'LOADING_MORE',
           value: curState.hostsList.value
         }
       }
@@ -67,7 +67,7 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | Se
     hostsApi.search({ ...form.values as SearchHostsFormInput, maxCount: 5, offset: 0 })
       .then(r => {
         updateState(curState => {
-          if(curState.hostsList.status !== 'LOADED')
+          if(curState.hostsList.status !== 'LOADING_MORE')
             throw new Error('')
           return ({
             hostsList: {
