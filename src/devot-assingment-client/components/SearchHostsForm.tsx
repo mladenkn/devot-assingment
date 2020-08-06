@@ -48,7 +48,7 @@ export function SearchHostsForm(props: Props){
         />
         <TextField
           error={!!(touchedAnyFields && form.errors.guestsCount)}
-          className={clsx(styles.spacing, styles.guestsInput)}
+          className={clsx(styles.guestsInput)}
           label='Guests'
           type='number'
           value={form.values.guestsCount}

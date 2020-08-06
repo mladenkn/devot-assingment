@@ -10,10 +10,12 @@ export type SearchHostsFormInputUncomplete = {
   guestsCount?: number
 }
 
-export type SearchHostsRequest = {
+export type PaginationParams = {
   offset: number
   maxCount: number
-} & SearchHostsFormInput
+}
+
+export type SearchHostsRequest = PaginationParams & SearchHostsFormInput
 
 export type HostListItem = {
   ref: string

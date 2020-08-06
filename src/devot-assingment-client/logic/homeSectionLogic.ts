@@ -1,12 +1,12 @@
 import { useHostsApi } from "../api/hosts"
 import { SearchHostsFormInput, SearchHostsFormInputUncomplete, HostListItem } from "../../devot-assingment-shared/models"
-import { LoadableList } from "../../utils/loadableList"
 import { useFormik } from 'formik'
 import { useState } from "react"
 import { useEffect } from "../../utils/useEffect"
+import { Loadable } from "../../utils/loadable"
 
 type State = {
-  hostsList: LoadableList<HostListItem[]>
+  hostsList: Loadable<HostListItem[]>
 }
 
 function validateFormValues(values: SearchHostsFormInput | SearchHostsFormInputUncomplete){
@@ -53,32 +53,6 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | Se
       })
   }
 
-  function loadMoreHosts(){
-    updateState(curState => {
-      if(curState.hostsList.status !== 'LOADED')
-        throw new Error('')      
-       return {
-         hostsList: {
-          status: 'LOADING_MORE',
-          value: curState.hostsList.value
-        }
-      }
-    })
-    hostsApi.search({ ...form.values as SearchHostsFormInput, maxCount: 5, offset: 0 })
-      .then(r => {
-        updateState(curState => {
-          if(curState.hostsList.status !== 'LOADING_MORE')
-            throw new Error('')
-          return ({
-            hostsList: {
-              status: 'LOADED',
-              value: [...curState.hostsList.value, ...r.data]
-            }
-          })
-        })
-      })    
-  }
-
   const form = useFormik({
     initialValues: formInitialValues,
     onSubmit: v => loadHosts(v as SearchHostsFormInput),
@@ -92,6 +66,5 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | Se
   return {
     hostsList: state.hostsList,
     form,
-    loadMoreHosts
   }
 }
