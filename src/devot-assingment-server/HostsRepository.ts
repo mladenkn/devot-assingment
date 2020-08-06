@@ -14,7 +14,7 @@ export class HostsRepository {
     const r: HostListItem[] = []
     const requiredDateRange: [Date, Date] = [req.startDate, req.endDate]
 
-    for (const host of this.data.hosts) {      
+    for (const host of this.data.hosts.slice(req.offset, req.offset + req.maxCount + 1)) {  
       const availableRooms = this.data.rooms.reduce((acc, room) => {
           if(room.hostRef !== host.ref)
             return acc
@@ -57,6 +57,9 @@ export class HostsRepository {
           address: host.address,
           rooms: availableRooms
         })
+
+      if(r.length === req.maxCount)
+        break;
     }
 
     return r
