@@ -1,4 +1,4 @@
-import { SearchHostsRequest, HostListItem, HostListRoom } from "../devot-assingment-shared/models"
+import { HostListItem, HostListRoom, SearchHostsFormInput } from "../devot-assingment-shared/models"
 import { AppData, Room, Booking } from "./models"
 import { doOverlap, isRangeInRange } from "../utils/dates"
 import { addDays } from "date-fns"
@@ -9,7 +9,7 @@ export class HostsRepository {
   constructor(private data: AppData){
   }
 
-  async search(req: SearchHostsRequest){
+  async search(req: SearchHostsFormInput & { maxCount: number }){
 
     const r: HostListItem[] = []
     const requiredDateRange: [Date, Date] = [req.startDate, req.endDate]
@@ -65,7 +65,7 @@ export class HostsRepository {
     return r
   }
 
-  findCompatibleOverlapingBookings(req: SearchHostsRequest, room: Room, overlapingBookings: Booking[]){
+  findCompatibleOverlapingBookings(req: SearchHostsFormInput & { maxCount: number }, room: Room, overlapingBookings: Booking[]){
     return overlapingBookings
       .reduce((acc, booking) =>
         {

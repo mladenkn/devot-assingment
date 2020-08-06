@@ -2,20 +2,15 @@ export type SearchHostsFormInput = {
   startDate: Date
   endDate: Date
   guestsCount: number
+  offset: number
 }
 
 export type SearchHostsFormInputUncomplete = {
   startDate: Date | null,
   endDate: Date | null,
   guestsCount?: number
+  offset: 0
 }
-
-export type PaginationParams = {
-  offset: number
-  maxCount: number
-}
-
-export type SearchHostsRequest = PaginationParams & SearchHostsFormInput
 
 export type HostListItem = {
   ref: string

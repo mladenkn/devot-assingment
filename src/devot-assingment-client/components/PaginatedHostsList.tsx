@@ -1,5 +1,5 @@
 import { Loadable } from "../../utils/loadable";
-import { HostListItem, PaginationParams } from "../../devot-assingment-shared/models";
+import { HostListItem } from "../../devot-assingment-shared/models";
 import React from "react";
 import { LoadableList } from "../../utils/view/LoadableList";
 import { HostsList } from "./HostsList";
@@ -9,7 +9,6 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight'
 
 type Props = {
   hosts: Loadable<HostListItem[]>
-  reload(p: PaginationParams): void
 }
 
 export function PaginatedHostsList(props: Props){

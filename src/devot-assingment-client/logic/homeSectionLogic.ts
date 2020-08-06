@@ -30,19 +30,26 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | Se
 
   const hostsApi = useHostsApi()
 
+  const form = useFormik({
+    initialValues: formInitialValues,
+    onSubmit: loadHosts,
+    validate: validateFormValues
+  })
+
   const [state, updateState] = useState<State>({
     hostsList: {
       status: 'LOADING'
     }
   })
 
-  function loadHosts(form: SearchHostsFormInput){
+  function loadHosts(){
     updateState({
       hostsList: {
         status: 'LOADING'
       }
     })
-    hostsApi.search({ ...form, maxCount: 5, offset: 0 })
+    const formInput = form.values as SearchHostsFormInput
+    hostsApi.search({ ...formInput, maxCount: 5 })
       .then(r => {
         updateState({
           hostsList: {
@@ -53,14 +60,8 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | Se
       })
   }
 
-  const form = useFormik({
-    initialValues: formInitialValues,
-    onSubmit: v => loadHosts(v as SearchHostsFormInput),
-    validate: validateFormValues
-  })
-
   useEffect(() => {
-    form.isValid && loadHosts(form.values as SearchHostsFormInput)
+    form.isValid && loadHosts()
   }, [form.values], { runOnFirstRender: true })
 
   return {

@@ -16,7 +16,7 @@ export function HostsListSection(props: Props) {
   return (
     <div className={styles.root}>
       <SearchHostsForm form={logic.form} />
-      <PaginatedHostsList reload={() => {}} hosts={logic.hostsList} />
+      <PaginatedHostsList hosts={logic.hostsList} />
     </div>
   );
 }

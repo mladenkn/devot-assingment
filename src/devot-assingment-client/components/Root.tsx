@@ -18,7 +18,8 @@ export function Root(){
               const formValues = {
                 startDate: new Date(params.get('start_date') as string),
                 endDate: new Date(params.get('end_date') as string),
-                guestsCount: parseInt(params.get('guests') as string)
+                guestsCount: parseInt(params.get('guests') as string),
+                offset: 0
               }
               return <HostsListSection formInitialValues={formValues} />
             }}
