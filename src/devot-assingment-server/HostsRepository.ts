@@ -11,22 +11,24 @@ export class HostsRepository {
 
   async search(req: SearchHostsFormInput & { maxCount: number }){
 
-    const r = this.data.hosts.reduce((acc, host, index) => {
+    const r: HostListItem[] = []
+
+    for (let index = req.offset; index < this.data.hosts.length; index++) {
       if(r.length === req.maxCount)
-        return acc
-      const availableRooms = this.findAvailableRooms(host.ref, req)      
-      if(availableRooms.length){
-        const hostMapped = {
+        break
+      
+      const host = this.data.hosts[index];
+
+      const availableRooms = this.findAvailableRooms(host.ref, req)
+
+      if(availableRooms.length)
+        r.push({
           ref: host.ref,
           name: host.name,
           address: host.address,
-          rooms: availableRooms 
-        }
-        return [...acc, hostMapped]
-      }
-      else
-        return acc
-    }, [] as HostListItem[])
+          rooms: availableRooms
+        })
+    }
 
     return r
   }
