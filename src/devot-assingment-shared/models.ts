@@ -1,10 +1,10 @@
-export type SearchHostsRequest = {
+export type SearchHostsFormInput = {
   startDate: Date
   endDate: Date
   guestsCount: number
 }
 
-export type SearchHostsRequestUncomplete = {
+export type SearchHostsFormInputUncomplete = {
   startDate: Date | null,
   endDate: Date | null,
   guestsCount?: number

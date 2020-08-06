@@ -2,12 +2,12 @@ import React from 'react';
 import { SearchHostsForm } from './SearchHostsForm';
 import { makeStyles } from '@material-ui/core';
 import { useHomeSectionLogic } from '../logic/homeSectionLogic';
-import { SearchHostsRequest, SearchHostsRequestUncomplete } from '../../devot-assingment-shared/models';
+import { SearchHostsFormInput, SearchHostsFormInputUncomplete } from '../../devot-assingment-shared/models';
 import { HostsList } from './HostList';
 import { Loadable } from '../../utils/view/Loadable';
 
 type Props = {
-  formInitialValues: SearchHostsRequest | SearchHostsRequestUncomplete
+  formInitialValues: SearchHostsFormInput | SearchHostsFormInputUncomplete
 }
 
 export function HostsListSection(props: Props) {
