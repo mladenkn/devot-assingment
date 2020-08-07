@@ -4,7 +4,7 @@ import { doOverlap, isRangeInRange } from "../utils/dates"
 import { addDays } from "date-fns"
 import { min } from "lodash"
 
-export class HostsRepository {
+export default class HostsInMemoryRepository {
   
   constructor(private data: AppData){
   }

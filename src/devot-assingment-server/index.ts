@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import path from 'path'
 import loadAppData from './loadAppData'
-import { HostsRepository } from './HostsRepository'
+import HostsInMemoryRepository from './HostsInMemoryRepository'
 import { registerRoutes } from './routes'
 
 function getDataFilesPaths(){
@@ -23,7 +23,7 @@ app.use(cors())
 
 loadAppData(getDataFilesPaths())
   .then(appData => {
-    const hostsRepo = new HostsRepository(appData)
+    const hostsRepo = new HostsInMemoryRepository(appData)
     registerRoutes(app, hostsRepo)
   })
 
