@@ -6,6 +6,7 @@ import { HostsRepository } from './HostsRepository'
 import { registerRoutes } from './routes'
 
 function getDataFilesPaths(){
+  // TODO: softcode path!
   const folder = 'C:\\Users\\mlade\\Documents\\projekti\\devot-assingment\\assingment_specs'
   const sufix = '-2000.csv'
   return {
