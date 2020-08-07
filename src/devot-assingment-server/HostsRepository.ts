@@ -8,9 +8,27 @@ export default class HostsRepository {
 
   async search(req: SearchHostsFormInput & { maxCount: number }){
     const r = await this.db.table<Host>('hosts')
-      .select('*')
+      .join('rooms', 'hosts.ref', 'rooms.hostRef')
+      .join('bookings', 'rooms.ref', 'bookings.roomRef')
+      .select({
+        ref: 'hosts.ref',
+        name: 'hosts.name',
+        address: 'hosts.address',
+        roomRef: 'rooms.ref',
+        roomCapacity: 'rooms.capacity',
+      })
+      .select(this.db.raw('"rooms"."capacity" - "bookings"."numberOfGuests" as "freeCapacity"'))
+      .where(b => {
+        b.where('bookings.startDate', '<', req.startDate)
+          .and.where('bookings.endDate', '>', req.endDate)
+      })
+      .orWhere(b => {        
+        b.where('bookings.startDate', '>=', req.startDate)
+          .and.where('bookings.endDate', '<=', req.endDate)
+          .and.whereRaw('"rooms"."capacity" - "bookings"."numberOfGuests" > 0')
+      })
       .offset(req.offset)
-      .limit(req.maxCount)
+      .limit(20)
 
     return r
   }
