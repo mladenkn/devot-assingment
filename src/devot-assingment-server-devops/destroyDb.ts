@@ -1,6 +1,6 @@
-import { destroySchema, connectToDb } from '../devot-assingment-server/dbInit'
+import { dropTables, connectToDb } from '../devot-assingment-server/db'
 
-destroySchema(connectToDb())
+dropTables(connectToDb())
   .then(() => {
     console.log('Succesfully destroyed db schema.')
     process.exit()

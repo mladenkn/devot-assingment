@@ -1,6 +1,6 @@
-import { createSchema, connectToDb } from '../devot-assingment-server/dbInit'
+import { createTables, connectToDb } from '../devot-assingment-server/db'
 
-createSchema(connectToDb())
+createTables(connectToDb())
   .then(() => {
     console.log('Succesfully initialized the database.')
     process.exit()

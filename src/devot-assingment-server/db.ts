@@ -14,7 +14,7 @@ export function connectToDb(){
 
 export type Database = ReturnType<typeof connectToDb>
 
-export async function createSchema(db: Database){
+export async function createTables(db: Database){
   await db.schema.createTable('hosts', t => {
     t.string('ref').primary()
     t.string('name')
@@ -40,7 +40,7 @@ export async function createSchema(db: Database){
   })
 }
 
-export async function destroySchema(db: Database){
+export async function dropTables(db: Database){
   await db.schema.dropTable('rooms')
   await db.schema.dropTable('hosts')
   await db.schema.dropTable('bookings')
