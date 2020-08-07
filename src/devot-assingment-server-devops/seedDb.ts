@@ -1,6 +1,6 @@
 import path from 'path'
 import loadAppData from '../devot-assingment-server/loadAppData'
-import { connectToDb } from '../devot-assingment-server/dbInit'
+import { connectToDb } from '../devot-assingment-server/db'
 import { Host } from '../devot-assingment-server/models'
 
 function getDataFilesPaths(){
