@@ -5,7 +5,7 @@ import { Host } from '../devot-assingment-server/models'
 
 function getDataFilesPaths(){
   // TODO: softcode path!
-  const folder = 'C:\\Users\\mlade\\Documents\\projekti\\devot-assingment\\assingment_specs'
+  const folder = 'C:\\Users\\mlade\\Documents\\projekti\\devot-assingment\\test_data'
   const sufix = '-2000.csv'
   return {
     bookings: path.join(folder, 'bookings' + sufix),
