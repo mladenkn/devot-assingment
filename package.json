@@ -32,6 +32,9 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
+    "server:db:init": "ts-node -P tsconfig.server.json src/devot-assingment-server-devops/initDb.ts",
+    "server:db:destroy": "ts-node -P tsconfig.server.json src/devot-assingment-server-devops/destroyDb.ts",
+    "server:db:reset": "ts-node -P tsconfig.server.json src/devot-assingment-server-devops/destroyDb.ts && ts-node -P tsconfig.server.json src/devot-assingment-server-devops/initDb.ts",
     "server:start": "nodemon",
     "client:start": "react-scripts start",
     "client:build": "react-scripts build",
