@@ -35,18 +35,19 @@ const rooms: Room[] = [
   {
     ref: 'room#3',
     hostRef: 'host#2',
-    capacity: 1
+    capacity: 3
   },
   {
     ref: 'room#4',
     hostRef: 'host#2',
     capacity: 3
   },
+
   {
     ref: 'room#5',
-    hostRef: 'host#2',
-    capacity: 3
-  },
+    hostRef: 'host#3',
+    capacity: 2
+  }
 ]
 
 const bookings: Booking[] = [
@@ -55,7 +56,7 @@ const bookings: Booking[] = [
     roomRef: 'room#1',
     startDate: parse('2020-09-01', 'yyyy-MM-dd', 0),
     endDate: parse('2020-09-10', 'yyyy-MM-dd', 0),
-    numberOfGuests: 2
+    numberOfGuests: 1
   },
   {
     ref: 'booking#2',
@@ -70,7 +71,7 @@ const bookings: Booking[] = [
     roomRef: 'room#2',
     startDate: parse('2020-09-01', 'yyyy-MM-dd', 0),
     endDate: parse('2020-09-10', 'yyyy-MM-dd', 0),
-    numberOfGuests: 2
+    numberOfGuests: 1
   },
   
   {

@@ -2,25 +2,28 @@ import { HostListItem, SearchHostsFormInput } from "../devot-assingment-shared/m
 import { Host } from "./models"
 import { Database } from './db'
 import { uniq, max } from "lodash"
+import { QueryBuilder } from 'knex'
 
 export default class HostsRepository {
 
   constructor(private db: Database){}
 
   async search(req: SearchHostsFormInput & { maxCount: number }){
+
+    function bookingPeriodsDontOverlap(b: QueryBuilder){
+      return b.where('bookings.startDate', '>', req.endDate)
+        .or.where('bookings.endDate', '<', req.startDate)
+    }
+
     const hostRefs = await this.db.table<Host>('hosts')
       .join('rooms', 'hosts.ref', 'rooms.hostRef')
       .leftJoin('bookings', 'rooms.ref', 'bookings.roomRef')
       .distinct('hosts.ref')
       .distinct(this.db.raw('CAST(SUBSTRING("hosts"."ref", 6) AS INT)'))
       .whereNull('bookings.ref')
-      .orWhere(b => {
-        b.where('bookings.startDate', '<', req.startDate)
-          .and.where('bookings.endDate', '>', req.endDate)
-      })
+      .orWhere(bookingPeriodsDontOverlap)
       .orWhere(b => {        
-        b.where('bookings.startDate', '>=', req.startDate)
-          .and.where('bookings.endDate', '<=', req.endDate)
+        b.whereNot(bookingPeriodsDontOverlap)
           .and.whereRaw('"rooms"."capacity" - "bookings"."numberOfGuests" >= ?', [req.guestsCount])
       })
       .orderByRaw('CAST(SUBSTRING("hosts"."ref", 6) AS INT)')
