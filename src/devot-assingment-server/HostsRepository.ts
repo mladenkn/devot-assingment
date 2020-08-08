@@ -1,13 +1,14 @@
 import { HostListItem, HostListRoom, SearchHostsFormInput } from "../devot-assingment-shared/models"
 import { Host, Room } from "./models"
 import { Database } from './db'
+import { groupBy, uniqBy, uniq, orderBy, flatten } from "lodash"
 
 export default class HostsRepository {
 
   constructor(private db: Database){}
 
   async search(req: SearchHostsFormInput & { maxCount: number }){
-    return this.db.table<Host>('hosts')
+    const withNoPaging = await this.db.table<Host>('hosts')
       .join('rooms', 'hosts.ref', 'rooms.hostRef')
       .leftJoin('bookings', 'rooms.ref', 'bookings.roomRef')
       .select({
@@ -30,8 +31,18 @@ export default class HostsRepository {
           .and.where('bookings.endDate', '<=', req.endDate)
           .and.whereRaw('"rooms"."capacity" - "bookings"."numberOfGuests" >= ?', [req.guestsCount])
       })
-      .offset(req.offset)
-      .orderByRaw('CAST(SUBSTRING("rooms"."ref", 6) AS INT)')
-      .limit(20)
+
+    // ne znam napravit paginaciju na bazi bez ORM-a :(
+    // pa to radim u memoriji od servera
+
+    const grouped = groupBy(withNoPaging, h => h.ref)
+    const hostIds = uniq(Object.keys(grouped))
+    const hostIdsOrdered = orderBy(hostIds, id => parseInt(id.slice(5)))
+    const hostIdsPaged = hostIdsOrdered.slice(req.offset, req.offset + req.maxCount)
+    const withPaging = flatten(Object.entries(grouped).filter(([key, value]) => hostIdsPaged.includes(key)).map(([key, value]) => value))
+
+    
+
+    return withPaging
   }
 }
