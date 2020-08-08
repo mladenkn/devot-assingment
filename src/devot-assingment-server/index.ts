@@ -8,8 +8,7 @@ const app = express()
 const port = 3001
 app.use(cors())
 
-const hostsRepo = new HostsRepository(connectToDb())
-registerRoutes(app, hostsRepo)
+registerRoutes(app, connectToDb())
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`)

@@ -1,7 +1,9 @@
 import { IRouter } from "express";
 import HostsRepository from "./HostsRepository";
+import { Database } from "./db";
+import getHostsWithAvailableRooms from "./getHostsWithAvailableRooms";
 
-export function registerRoutes(router: IRouter, hostsRepo: HostsRepository){
+export function registerRoutes(router: IRouter, db: Database){
 
   router.get('/hosts/search', async (req, res) => {
     const params = {
@@ -11,7 +13,7 @@ export function registerRoutes(router: IRouter, hostsRepo: HostsRepository){
       offset: parseInt(req.query.offset as string),
       maxCount: parseInt(req.query.maxCount as string),
     }
-    const hosts = await hostsRepo.search(params)
+    const hosts = await getHostsWithAvailableRooms(db, params)
     res.json(hosts)
   })
   
