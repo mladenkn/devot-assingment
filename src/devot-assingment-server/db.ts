@@ -1,15 +1,8 @@
 import initKnex from 'knex'
+const dbConf = require('../../db.conf')
 
 export function connectToDb(){
-  return initKnex({
-    client: 'pg',
-    connection: {
-      host: '127.0.0.1',
-      user: 'postgres',
-      password: '',
-      database: 'devot-assingment'
-    }
-  });
+  return initKnex(dbConf);
 }
 
 export type Database = ReturnType<typeof connectToDb>
