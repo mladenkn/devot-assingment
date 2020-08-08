@@ -1,5 +1,4 @@
 import { IRouter } from "express";
-import HostsRepository from "./HostsRepository";
 import { Database } from "./db";
 import getHostsWithAvailableRooms from "./getHostsWithAvailableRooms";
 

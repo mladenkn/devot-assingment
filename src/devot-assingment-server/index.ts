@@ -1,6 +1,5 @@
 import express from 'express'
 import cors from 'cors'
-import HostsRepository from './HostsRepository'
 import { registerRoutes } from './routes'
 import { connectToDb } from './db'
 
