@@ -30,7 +30,7 @@ export function SearchHostsForm(props: Props){
             form.setFieldTouched('startDate')
             form.setFieldValue('startDate', date)
           }}
-          maxDate={form.values.endDate}
+          minDate={new Date()}
         />
         <KeyboardDatePicker
           error={!!(touchedAnyFields && form.errors.endDate)}
