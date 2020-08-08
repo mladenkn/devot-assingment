@@ -1,7 +1,7 @@
-import { HostListItem, HostListRoom, SearchHostsFormInput } from "../devot-assingment-shared/models"
-import { Host, Room } from "./models"
+import { HostListItem, SearchHostsFormInput } from "../devot-assingment-shared/models"
+import { Host } from "./models"
 import { Database } from './db'
-import { groupBy, uniqBy, uniq, orderBy, flatten } from "lodash"
+import { groupBy, uniq, orderBy, max } from "lodash"
 
 export default class HostsRepository {
 
@@ -16,9 +16,8 @@ export default class HostsRepository {
         name: 'hosts.name',
         address: 'hosts.address',
         roomRef: 'rooms.ref',
+        roomName: 'rooms.ref',
         roomCapacity: 'rooms.capacity',
-        bookingNumberOfGuests: 'bookings.numberOfGuests',
-        bookingRef: 'bookings.ref'
       })
       .select(this.db.raw('"rooms"."capacity" - "bookings"."numberOfGuests" as "freeCapacity"'))      
       .whereNull('bookings.ref')
@@ -39,10 +38,27 @@ export default class HostsRepository {
     const hostIds = uniq(Object.keys(grouped))
     const hostIdsOrdered = orderBy(hostIds, id => parseInt(id.slice(5)))
     const hostIdsPaged = hostIdsOrdered.slice(req.offset, req.offset + req.maxCount)
-    const withPaging = flatten(Object.entries(grouped).filter(([key, value]) => hostIdsPaged.includes(key)).map(([key, value]) => value))
+    const withPagingEntries = Object.entries(grouped).filter(([key, value]) => hostIdsPaged.includes(key))
 
-    
+    // map from relational to object model
+    const hostListItemModels: HostListItem[] = withPagingEntries.map(([key, value]) => {
+      const roomIds = uniq(value.map(i => i.roomRef))
+      const rooms = roomIds.map(roomRef => {
+        const whereRoomId = value.filter(i => i.roomRef === roomRef)
+        const totalCapacity = whereRoomId[0].roomCapacity
+        const name = whereRoomId[0].roomName
+        const freeCapacity = max(whereRoomId.map(i => (i as any).freeCapacity as number)) || totalCapacity
+        return { ref: roomRef, name, totalCapacity, freeCapacity }
+      })
+      const host = {
+        ref: value[0].ref,
+        name: value[0].name,
+        address: value[0].address,
+        rooms
+      }
+      return host
+    })    
 
-    return withPaging
+    return orderBy(hostListItemModels, i => parseInt(i.ref.substring(5)))
   }
 }
