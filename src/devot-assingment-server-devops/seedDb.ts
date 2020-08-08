@@ -4,8 +4,7 @@ import { connectToDb } from '../devot-assingment-server/db'
 import { Host } from '../devot-assingment-server/models'
 
 function getDataFilesPaths(){
-  // TODO: softcode path!
-  const folder = 'C:\\Users\\mlade\\Documents\\projekti\\devot-assingment\\test_data'
+  const folder = path.join(process.cwd(), 'test_data')
   const sufix = '-2000.csv'
   return {
     bookings: path.join(folder, 'bookings' + sufix),
