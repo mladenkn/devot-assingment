@@ -34,7 +34,7 @@ export async function createTables(db: Database){
 }
 
 export async function dropTables(db: Database){
+  await db.schema.dropTable('bookings')
   await db.schema.dropTable('rooms')
   await db.schema.dropTable('hosts')
-  await db.schema.dropTable('bookings')
 }

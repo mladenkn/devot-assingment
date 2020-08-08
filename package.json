@@ -36,6 +36,7 @@
     "server:db:destroy": "ts-node -P tsconfig.server.json src/devot-assingment-server-devops/destroyDb.ts",
     "server:db:reset": "ts-node -P tsconfig.server.json src/devot-assingment-server-devops/destroyDb.ts && ts-node -P tsconfig.server.json src/devot-assingment-server-devops/initDb.ts",
     "server:db:seed": "ts-node -P tsconfig.server.json src/devot-assingment-server-devops/seedDb.ts",
+    "server:db:seed2": "ts-node -P tsconfig.server.json src/devot-assingment-server-devops/seedDb2.ts",
     "server:start": "nodemon",
     "client:start": "react-scripts start",
     "client:build": "react-scripts build",
