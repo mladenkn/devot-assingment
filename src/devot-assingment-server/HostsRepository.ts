@@ -35,30 +35,30 @@ export default class HostsRepository {
     // pa to radim u memoriji od servera
 
     const grouped = groupBy(withNoPaging, h => h.ref)
-    const hostIds = uniq(Object.keys(grouped))
-    const hostIdsOrdered = orderBy(hostIds, id => parseInt(id.slice(5)))
-    const hostIdsPaged = hostIdsOrdered.slice(req.offset, req.offset + req.maxCount)
-    const withPagingEntries = Object.entries(grouped).filter(([key, value]) => hostIdsPaged.includes(key))
+    const hostRefs = uniq(Object.keys(grouped))
+    const hostRefsOrdered = orderBy(hostRefs, id => parseInt(id.slice(5)))
+    const hostRefsPaged = hostRefsOrdered.slice(req.offset, req.offset + req.maxCount)
 
     // map from relational to object model
-    const hostListItemModels: HostListItem[] = withPagingEntries.map(([key, value]) => {
-      const roomIds = uniq(value.map(i => i.roomRef))
-      const rooms = roomIds.map(roomRef => {
-        const whereRoomId = value.filter(i => i.roomRef === roomRef)
+    const hostListItemModels: HostListItem[] = hostRefsPaged.map(hostRef => {
+      const row = grouped[hostRef]
+      const roomRefs = uniq(row.map(i => i.roomRef))
+      const rooms = roomRefs.map(roomRef => {
+        const whereRoomId = row.filter(i => i.roomRef === roomRef)
         const totalCapacity = whereRoomId[0].roomCapacity
         const name = whereRoomId[0].roomName
         const freeCapacity = max(whereRoomId.map(i => (i as any).freeCapacity as number)) || totalCapacity
         return { ref: roomRef, name, totalCapacity, freeCapacity }
       })
       const host = {
-        ref: value[0].ref,
-        name: value[0].name,
-        address: value[0].address,
+        ref: row[0].ref,
+        name: row[0].name,
+        address: row[0].address,
         rooms
       }
       return host
     })    
 
-    return orderBy(hostListItemModels, i => parseInt(i.ref.substring(5)))
+    return hostListItemModels
   }
 }
