@@ -1,27 +1,31 @@
 import { HostListItem, SearchHostsFormInput, HostListRoom } from "../devot-assingment-shared/models"
-import { Host, Room } from "./models"
+import { Host } from "./models"
 import { Database } from './db'
 import { uniq, max } from "lodash"
-import { QueryBuilder } from 'knex'
+import { addDays } from "date-fns"
 
 export default async function(db: Database, req: SearchHostsFormInput & { maxCount: number }){
-  
-  function bookingPeriodsDontOverlap(b: QueryBuilder){
-    return b
-      .where('bookings.startDate', '>', req.endDate)
-      .or.where('bookings.endDate', '<', req.startDate)
-  }
 
   function createBaseQuery(){
     return db.table<Host>('hosts')
       .join('rooms', 'hosts.ref', 'rooms.hostRef')
-      .leftJoin('bookings', 'rooms.ref', 'bookings.roomRef')
+      .leftJoin('bookings', b => {
+        b.on('rooms.ref', 'bookings.roomRef')
+          .andOn(b => {
+            b.andOnBetween('startDate', [req.startDate, addDays(req.endDate, 1)])
+              .orOnBetween('endDate', [req.startDate, addDays(req.endDate, 1)])
+              .orOn(b => {
+                b.on(db.raw('? >= "bookings"."startDate"', req.startDate))
+                  .andOn(db.raw('? < "bookings"."endDate"', req.startDate))
+              })
+              .orOn(b => {
+                b.on(db.raw('? >= "bookings"."startDate"', req.endDate))
+                  .andOn(db.raw('? < "bookings"."endDate"', req.endDate))
+              })
+          })
+      })
       .whereNull('bookings.ref')
-      .orWhere(bookingPeriodsDontOverlap)
-      .orWhere(b => {        
-        b.whereNot(bookingPeriodsDontOverlap)
-          .and.whereRaw('"rooms"."capacity" - "bookings"."numberOfGuests" >= ?', [req.guestsCount])
-      })    
+      .orWhereRaw('"rooms"."capacity" - "bookings"."numberOfGuests" >= ?', [req.guestsCount])
   }
 
   const pagedHostRefs = await createBaseQuery()
@@ -65,6 +69,16 @@ export default async function(db: Database, req: SearchHostsFormInput & { maxCou
     }
     return host
   })
+
+  const debugQueryResult = createBaseQuery()
+    .select({
+      bookingStartDate: 'bookings.startDate',
+      bookingEndDate: 'bookings.endDate',
+      room: 'rooms.ref'
+    })
+    .limit(50)
+
+  console.log(debugQueryResult.toSQL())
   
-  return hostListItemModels
+  return hostListItemModels 
 }
