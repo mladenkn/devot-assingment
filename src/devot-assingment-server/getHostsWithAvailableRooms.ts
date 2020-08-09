@@ -69,16 +69,6 @@ export default async function(db: Database, req: SearchHostsFormInput & { maxCou
     }
     return host
   })
-
-  const debugQueryResult = createBaseQuery()
-    .select({
-      bookingStartDate: 'bookings.startDate',
-      bookingEndDate: 'bookings.endDate',
-      room: 'rooms.ref'
-    })
-    .limit(50)
-
-  console.log(debugQueryResult.toSQL())
   
   return hostListItemModels 
 }
