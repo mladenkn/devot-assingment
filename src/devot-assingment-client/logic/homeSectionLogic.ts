@@ -1,7 +1,7 @@
 import { useHostsApi } from "../api/hosts"
 import { SearchHostsFormInput, SearchHostsFormInputUncomplete, HostListItem } from "../../devot-assingment-shared/models"
 import { useFormik } from 'formik'
-import { useState } from "react"
+import { useImmer } from "use-immer"
 import { useEffect } from "../../utils/useEffect"
 import { Loadable } from "../../utils/loadable"
 
@@ -36,33 +36,29 @@ export function useHomeSectionLogic(formInitialValues: SearchHostsFormInput | Se
     validate: validateFormValues
   })
 
-  const [state, updateState] = useState<State>({
+  const [state, updateState] = useImmer<State>({
     hostsList: {
       status: 'LOADING'
     }
   })
 
   function loadHosts(){
-    updateState({
-      hostsList: {
-        status: 'LOADING'
-      }
+    updateState(draft => {
+      draft.hostsList.status = 'LOADING'
     })
     const formInput = form.values as SearchHostsFormInput
     hostsApi.search({ ...formInput, maxCount: hostsListPageSize })
       .then(r => {
-        updateState({
-          hostsList: {
+        updateState(draft => {
+          draft.hostsList = {
             status: 'LOADED',
             value: r.data
           }
         })
       })
       .catch(() => {
-        updateState({
-          hostsList: {
-            status: 'ERROR'
-          }
+        updateState(draft => {
+          draft.hostsList.status = 'ERROR'
         })
       })
   }
