@@ -1,7 +1,6 @@
 import { AppDataFilesPaths, Booking, Room, Host } from "./models"
 import csv from 'csvtojson'
 import { camelCase } from "lodash"
-import { parse } from "date-fns"
 
 export default async function(files: AppDataFilesPaths){
 
@@ -17,8 +16,8 @@ export default async function(files: AppDataFilesPaths){
     bookings: (await promises.bookings)
       .map(b => ({
         ...b,
-        startDate: parse(b.startDate, 'yyyy-MM-dd', 0),
-        endDate: parse(b.startDate, 'yyyy-MM-dd', 0),
+        startDate: new Date(b.startDate),
+        endDate: new Date(b.endDate),
         numberOfGuests: parseInt(b.numberOfGuests)
       }) as Booking),
     

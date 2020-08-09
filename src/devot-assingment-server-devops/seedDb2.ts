@@ -1,5 +1,4 @@
 import { Host, Room, Booking } from '../devot-assingment-server/models'
-import { parse } from 'date-fns'
 import { connectToDb } from '../devot-assingment-server/db'
 
 const hosts: Host[] = [
@@ -54,31 +53,31 @@ const bookings: Booking[] = [
   {
     ref: 'booking#1',
     roomRef: 'room#1',
-    startDate: parse('2020-09-01', 'yyyy-MM-dd', 0),
-    endDate: parse('2020-09-10', 'yyyy-MM-dd', 0),
+    startDate: new Date('2020-09-01'),
+    endDate: new Date('2020-09-10'),
     numberOfGuests: 1
   },
   {
     ref: 'booking#2',
     roomRef: 'room#1',
-    startDate: parse('2020-09-12', 'yyyy-MM-dd', 0),
-    endDate: parse('2020-09-15', 'yyyy-MM-dd', 0),
+    startDate: new Date('2020-09-12'),
+    endDate: new Date('2020-09-15'),
     numberOfGuests: 1
   },
 
   {
     ref: 'booking#3',
     roomRef: 'room#2',
-    startDate: parse('2020-09-01', 'yyyy-MM-dd', 0),
-    endDate: parse('2020-09-10', 'yyyy-MM-dd', 0),
+    startDate: new Date('2020-09-01'),
+    endDate: new Date('2020-09-10'),
     numberOfGuests: 1
   },
   
   {
     ref: 'booking#4',
     roomRef: 'room#3',
-    startDate: parse('2020-09-01', 'yyyy-MM-dd', 0),
-    endDate: parse('2020-09-10', 'yyyy-MM-dd', 0),
+    startDate: new Date('2020-09-01'),
+    endDate: new Date('2020-09-10'),
     numberOfGuests: 3
   },
 ]
